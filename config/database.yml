@@ -23,4 +23,8 @@ default: &default
 
 development:
   <<: *default
-  database: fb_db
+  database: fb_dev
+
+test:
+  <<: *default
+  database: fb_test
