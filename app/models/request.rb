@@ -9,7 +9,6 @@ class Request < ApplicationRecord
   def check_inverse
     if Request.find_by(sender_id: receiver.id, receiver_id: sender.id)
       self.sender, self.receiver = self.receiver, self.sender
-    end  
+    end
   end
-
 end

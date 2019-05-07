@@ -7,7 +7,7 @@
   User.create!(
     name: name,
     email: email,
-    birthdate: 18.years.ago+n.months
+    password: '123456'
   )
 end
 

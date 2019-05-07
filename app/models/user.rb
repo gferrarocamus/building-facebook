@@ -2,6 +2,11 @@
 
 # User Model
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships, class_name: 'User'
 
@@ -13,4 +18,19 @@ class User < ApplicationRecord
   has_many :posts
   has_many :comments
   has_many :likes
+
+  validates :name, presence: true, length: { maximum: 50 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  validates :email, presence: true, length: { maximum: 255 },
+                    format: { with: VALID_EMAIL_REGEX },
+                    uniqueness: { case_sensitive: false }
+
+  before_save :downcase_email
+
+  private
+
+  def downcase_email
+    self.email = email.downcase
+  end
 end
