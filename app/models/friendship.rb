@@ -15,8 +15,6 @@ class Friendship < ApplicationRecord
   end
 
   def mirror_destruction
-    if friendship = Friendship.find_by(user_id: friend.id, friend_id: user.id)
-      friendship.destroy
-    end
+    Friendship.find_by(user_id: friend.id, friend_id: user.id)&.destroy
   end
 end

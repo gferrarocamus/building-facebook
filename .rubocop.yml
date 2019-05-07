@@ -24,3 +24,5 @@ AllCops:
     - 'db/seeds.rb'
     - 'config/*'
     - 'bin/*'
+    - 'config/initializers/devise.rb'
+    - 'app/mailers/application_mailer.rb'

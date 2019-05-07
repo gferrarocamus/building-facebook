@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# CreateFriendships Migration
 class CreateFriendships < ActiveRecord::Migration[5.2]
   def change
     create_table :friendships do |t|
