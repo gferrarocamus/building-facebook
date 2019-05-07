@@ -9,4 +9,8 @@ class User < ApplicationRecord
   has_many :received_requests, class_name: 'Request', foreign_key: 'receiver_id', inverse_of: :sender
   has_many :senders, through: :received_requests, source: :sender
   has_many :receivers, through: :sent_requests, source: :receiver
+
+  has_many :posts
+  has_many :comments
+  has_many :likes
 end
