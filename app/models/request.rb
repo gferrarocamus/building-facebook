@@ -4,7 +4,7 @@
 class Request < ApplicationRecord
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
-  validates_uniqueness_of :sender_id, :scope => :receiver_id
+  validates :sender_id, uniqueness: { scope: :receiver_id }
 
   before_create :check_inverse
 

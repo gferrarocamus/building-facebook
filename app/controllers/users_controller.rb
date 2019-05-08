@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  protected 
+  protected
 
   def sign_in_user
     return if user_signed_in?
