@@ -1,3 +1,13 @@
 <%= link_to 'Logout', destroy_user_session_path, method: :delete if user_signed_in? %>
 
 Show page
+
+<h1><%= @user.name %></h1>
+<%= @user.email %>
+
+<% if @user!=current_user %>
+  <%= form_tag("/requests", method: "post") do %>
+    <div><%= hidden_field_tag :receiver_id, @user.id %></div>
+    <%= submit_tag("Send friend request")%>
+  <% end %>
+<% end %>
