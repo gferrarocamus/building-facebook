@@ -9,7 +9,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    id = params[:id]
+    if id
+      @request = current_user.sent_requests.find_by(receiver_id: id)
+      @user = User.find(id)
+    else
+      @user = current_user
+    end
   end
 
   protected
@@ -20,4 +26,5 @@ class UsersController < ApplicationController
     flash[:alert] = 'You need to sign in to proceed.'
     redirect_to new_user_session_path
   end
+
 end

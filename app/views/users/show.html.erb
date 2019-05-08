@@ -6,8 +6,15 @@ Show page
 <%= @user.email %>
 
 <% if @user!=current_user %>
-  <%= form_tag("/requests", method: "post") do %>
-    <div><%= hidden_field_tag :receiver_id, @user.id %></div>
-    <%= submit_tag("Send friend request")%>
+  <% if request_sent?(@user.id) %>
+    <%= form_tag("/requests/#{@request.id}", method: "delete") do %>
+      <%= hidden_field_tag :receiver_id, @user.id %>
+      <%= submit_tag("Cancel request")%>
+    <% end %>
+  <% else %>
+    <%= form_tag("/requests", method: "post") do %>
+      <%= hidden_field_tag :receiver_id, @user.id %>
+      <%= submit_tag("Send friend request")%>
+    <% end %>
   <% end %>
 <% end %>
