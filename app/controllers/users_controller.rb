@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-# User Controller
+# Users Controller
 class UsersController < ApplicationController
+  def index
+    @users = User.all
+  end
+
   def show
-  end
-
-  def new
-    @user = User.new
-  end
-
-  def create
+    @user = current_user
   end
 end

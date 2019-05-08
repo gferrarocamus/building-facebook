@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
-  root 'devise/registrations#new'
+  
+  # resources :users, only: [:show, :index]
+  # root 'users#show'
+  get 'user/:id', to: 'users#show'
+  get 'users', to: 'users#index'
+  
+  devise_scope :user do
+    root to: "users/registrations#new"
+  end
 
-  devise_for :users
-
-  #resource :users, only: [:new, :create, :show, :index], path: '/registrations'
-  #devise_for :users, controllers: { sessions: 'users/registrations' }
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
 end
