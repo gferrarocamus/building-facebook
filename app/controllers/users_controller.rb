@@ -9,8 +9,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    if (@user = User.find_by(id: params[:id]))
+    if (@user = User.includes(:sent_requests, :friendships).find_by(id: params[:id]))
       @request = current_user.sent_requests.find_by(receiver_id: params[:id])
+      @friendship = current_user.friendships.find_by(friend_id: params[:id])
     else
       redirect_to users_path
     end

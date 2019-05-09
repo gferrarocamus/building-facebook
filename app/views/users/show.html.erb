@@ -2,7 +2,11 @@
 <%= @user.email %>
 
 <% if @user!=current_user %>
-  <% if request_sent?(@user.id) %>
+  <% if friendship_exists?(@user.id) %>    
+    <%= form_tag("/friendships/#{@friendship.id}", method: "delete") do %>
+      <%= submit_tag("Unfriend")%>
+    <% end %>
+  <% elsif request_sent?(@user.id) %>
     <%= form_tag("/requests/#{@request.id}", method: "delete") do %>
       <%= submit_tag("Cancel request")%>
     <% end %>
