@@ -9,12 +9,10 @@ class UsersController < ApplicationController
   end
 
   def show
-    id = params[:id]
-    if id
-      @request = current_user.sent_requests.find_by(receiver_id: id)
-      @user = User.find(id)
+    if (@user = User.find_by(id: params[:id]))
+      @request = current_user.sent_requests.find_by(receiver_id: params[:id])
     else
-      @user = current_user
+      redirect_to users_path
     end
   end
 

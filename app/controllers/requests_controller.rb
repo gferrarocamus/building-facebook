@@ -2,9 +2,8 @@
 
 # RequestsController
 class RequestsController < ApplicationController
-
   def index
-    @requests = Request.includes(:sender).find_by(receiver_id: current_user.id)
+    @requests = Request.includes(:sender).where(receiver_id: current_user.id)
   end
 
   def create
@@ -18,13 +17,10 @@ class RequestsController < ApplicationController
   end
 
   def destroy
-    if Request.exists?(params[:id])
-      Request.destroy(params[:id])
-      flash[:notice] = 'Request canceled successfully'
-    else
-      flash[:alert] = 'Already canceled.'
-    end
+    return unless (request = Request.find_by(id: params[:id]))
 
-    redirect_to user_path(User.find(params[:receiver_id]))
+    receiver_id = request.receiver_id
+    request.destroy
+    redirect_back(fallback_location: user_path(User.find(receiver_id)))
   end
 end

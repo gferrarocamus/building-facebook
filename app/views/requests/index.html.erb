@@ -1,6 +1,16 @@
-<% if !@requests.nil? %>
+<% if !@requests.empty? %>
   <% @requests.each do |r| %>
-    <h2><%= r.sender.name %></h2>
+    <p><%= r.sender.name %></p>
+    
+    <%= form_tag("/requests/#{r.id}", method: "delete") do %>
+      <%= submit_tag("Reject request")%>
+    <% end %>
+
+    <%= form_tag("/requests/#{r.id}", method: "post") do %>
+      <%= hidden_field_tag :receiver_id, current_user.id %>
+    <%= submit_tag("Send friend request")%>
+
+    <% end %>
   <% end %>
 <% else %>
   <p>No pending friend requests</p>

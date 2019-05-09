@@ -10,6 +10,14 @@
   </head>
 
   <body>
+    <nav>
+      <%= link_to 'Social network', root_path %>
+      <% if user_signed_in? %>
+        <%= link_to current_user.name, user_path(current_user) %>
+        <%= link_to 'Notifications', requests_path %>
+        <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+      <% end %>
+    </nav>
 
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>

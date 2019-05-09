@@ -1,14 +1,9 @@
-<%= link_to 'Logout', destroy_user_session_path, method: :delete if user_signed_in? %>
-
-Show page
-
 <h1><%= @user.name %></h1>
 <%= @user.email %>
 
 <% if @user!=current_user %>
   <% if request_sent?(@user.id) %>
     <%= form_tag("/requests/#{@request.id}", method: "delete") do %>
-      <%= hidden_field_tag :receiver_id, @user.id %>
       <%= submit_tag("Cancel request")%>
     <% end %>
   <% else %>
