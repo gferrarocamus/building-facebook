@@ -1,0 +1,7 @@
+<% if !@requests.nil? %>
+  <% @requests.each do |r| %>
+    <h2><%= r.sender.name %></h2>
+  <% end %>
+<% else %>
+  <p>No pending friend requests</p>
+<% end %>

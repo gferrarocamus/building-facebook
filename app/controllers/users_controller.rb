@@ -2,7 +2,7 @@
 
 # Users Controller
 class UsersController < ApplicationController
-  before_action :sign_in_user
+  before_action :authenticate_user!
 
   def index
     @users = User.all
@@ -20,11 +20,11 @@ class UsersController < ApplicationController
 
   protected
 
-  def sign_in_user
-    return if user_signed_in?
+  # def sign_in_user
+  #   return if user_signed_in?
 
-    flash[:alert] = 'You need to sign in to proceed.'
-    redirect_to new_user_session_path
-  end
+  #   flash[:alert] = 'You need to sign in to proceed.'
+  #   redirect_to new_user_session_path
+  # end
 
 end

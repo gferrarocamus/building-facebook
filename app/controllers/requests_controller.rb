@@ -2,6 +2,11 @@
 
 # RequestsController
 class RequestsController < ApplicationController
+
+  def index
+    @requests = Request.includes(:sender).find_by(receiver_id: current_user.id)
+  end
+
   def create
     @request = Request.new(sender_id: current_user.id, receiver_id: params[:receiver_id])
     if @request.save
