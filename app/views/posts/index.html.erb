@@ -1,0 +1,6 @@
+<%= link_to 'New Post', new_post_path %>
+
+<% @posts.each do |post| %>
+    <h3><%= post.user.name %></h3>
+    <p><%= post.content %></p>
+<% end %>

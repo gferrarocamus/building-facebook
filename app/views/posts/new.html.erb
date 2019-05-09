@@ -1,0 +1,12 @@
+<h2>New Post</h2>
+
+<%= form_for @post do |f| %>
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.text_area :content, autofocus: true, autocomplete: "content" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Post" %>
+  </div>
+<% end %>

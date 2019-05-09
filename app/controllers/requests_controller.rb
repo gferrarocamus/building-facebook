@@ -2,6 +2,8 @@
 
 # RequestsController
 class RequestsController < ApplicationController
+  before_action :authenticate_user!
+  
   def index
     @requests = Request.includes(:sender).where(receiver_id: current_user.id)
   end
