@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'users', to: 'users#index'
 
   resources :requests, only: [:create, :destroy, :index]
+  resources :friendships, only: [:create, :destroy]
 
   devise_for :users, path: '/', path_names: { 
     sign_in: 'login', 
