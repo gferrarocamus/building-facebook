@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :requests, only: [:create, :destroy, :index]
   resources :friendships, only: [:create, :destroy]
   resources :posts, only: [:new, :create, :show, :index]
+  resources :comments, only: [:create]
   resources :likes, only: [:create, :destroy]
 
   devise_for :users, path: '/', path_names: { 

@@ -6,11 +6,11 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.includes(:user, :likes).find(params[:id])
-    @likes_count = @post.likes.count
   end
 
   def index
     @posts = Post.all.includes(:user, :likes)
+    @comment = Comment.new
   end
 
   def new

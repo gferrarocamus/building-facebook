@@ -1,12 +1,15 @@
 <%= link_to 'New Post', new_post_path %>
 
 <% @posts.each do |post| %>
-    <h3><%= post.user.name %></h3>
-    <p><%= post.content %></p>
-    <p><%= post.likes.length || '0' %></p>
-    <% if (like = like(post.id)) %>
-      <%= link_to 'Unlike', {controller: "likes", action: 'destroy', id: like}, method: :delete %>
-    <% else %>
-      <%= link_to 'Like', {controller: 'likes', action: 'create', id: post}, method: :post %>
-    <% end %>
+  <h3><%= post.user.name %></h3>
+  <p><%= post.content %></p>
+  <p><%= post.likes.length || '0' %></p>
+
+  <% if (like = like(post.id)) %>
+    <%= link_to 'Unlike', {controller: "likes", action: 'destroy', id: like}, method: :delete %>
+  <% else %>
+    <%= link_to 'Like', {controller: 'likes', action: 'create', id: post}, method: :post %>
+  <% end %>
+
+  <%= render partial: 'comment', locals: {post_id: post.id} %>
 <% end %>

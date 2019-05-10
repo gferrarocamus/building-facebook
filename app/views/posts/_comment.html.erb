@@ -1,0 +1,11 @@
+<%= form_for @comment do |f| %>
+  <div class="field">
+    <%= f.text_area :content, placeholder: 'Add comment here ...' %>
+  </div>
+
+  <%= hidden_field_tag 'comment[post_id]', post_id %>
+
+  <div class="actions">
+    <%= f.submit "Comment" %>
+  </div>
+<% end %>
