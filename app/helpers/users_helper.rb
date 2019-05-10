@@ -12,4 +12,12 @@ module UsersHelper
   def friendship_exists?(friend_id)
     Friendship.exists?(user_id: current_user.id, friend_id: friend_id)
   end
+
+  def like_exists?(post_id)
+    Like.exists?(user_id: current_user.id, post_id: post_id)
+  end
+
+  def like(post_id)
+    Like.find_by(user_id: current_user.id, post_id: post_id)
+  end
 end

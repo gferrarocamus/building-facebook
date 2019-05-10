@@ -6,7 +6,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.includes(:user, :likes).find(params[:id])
-    @likes_count = likes_count(@post.id)
+    @likes_count = @post.likes.count
   end
 
   def index
@@ -31,9 +31,5 @@ class PostsController < ApplicationController
 
   def posts_params
     params.require(:post).permit(:content)
-  end
-
-  def likes_count(id)
-    Like.count(:conditions => ["post_id == ?", id])
   end
 end
