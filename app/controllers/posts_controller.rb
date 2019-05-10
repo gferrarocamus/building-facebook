@@ -3,14 +3,15 @@
 # Posts Controller
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :new_comment, only: [:show, :index]
+  before_action :new_comment, only: %i[show index]
 
   def show
     @post = Post.date_sorted.includes(:user, :likes, comments: [:user]).find(params[:id])
   end
 
   def index
-    @posts = Post.date_sorted.all.includes(:user, :likes, comments: [:user])
+    friends = current_user.friends.pluck('friend_id') + [current_user.id]
+    @posts = Post.date_sorted.where(user_id: friends).includes(:user, :likes, comments: [:user])
   end
 
   def new
@@ -31,9 +32,5 @@ class PostsController < ApplicationController
 
   def posts_params
     params.require(:post).permit(:content)
-  end
-
-  def new_comment
-    @comment = Comment.new
   end
 end
