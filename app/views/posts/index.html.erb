@@ -3,4 +3,6 @@
 <% @posts.each do |post| %>
     <h3><%= post.user.name %></h3>
     <p><%= post.content %></p>
+    <%= @likes_count %>
+    <%= link_to 'Like', {controller: 'likes', action: 'create', id: post}, method: :post %>
 <% end %>

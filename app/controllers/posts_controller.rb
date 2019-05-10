@@ -5,11 +5,12 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.includes(:user, :likes).find(params[:id])
+    @likes_count = likes_count(@post.id)
   end
 
   def index
-    @posts = Post.all.includes(:user)
+    @posts = Post.all.includes(:user, :likes)
   end
 
   def new
@@ -19,7 +20,7 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(posts_params)
     if @post.save
-      flash[:notice] = 'Post creates successfully.'
+      flash[:notice] = 'Post created successfully.'
       redirect_to @post
     else
       render 'new'
@@ -30,5 +31,9 @@ class PostsController < ApplicationController
 
   def posts_params
     params.require(:post).permit(:content)
+  end
+
+  def likes_count(id)
+    Like.count(:conditions => ["post_id == ?", id])
   end
 end
