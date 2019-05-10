@@ -6,11 +6,11 @@ class PostsController < ApplicationController
   before_action :new_comment, only: [:show, :index]
 
   def show
-    @post = Post.includes(:user, :likes, comments: [:user]).find(params[:id])
+    @post = Post.date_sorted.includes(:user, :likes, comments: [:user]).find(params[:id])
   end
 
   def index
-    @posts = Post.all.includes(:user, :likes, comments: [:user])
+    @posts = Post.date_sorted.all.includes(:user, :likes, comments: [:user])
   end
 
   def new

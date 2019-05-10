@@ -7,4 +7,6 @@ class Post < ApplicationRecord
   has_many :likes, dependent: :destroy
 
   validates :content, presence: true
+
+  scope :date_sorted, -> { order(created_at: :desc) }
 end

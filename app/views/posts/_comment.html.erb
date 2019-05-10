@@ -10,7 +10,7 @@
   </div>
 <% end %>
 
-<% post.comments.each do |c| %>
+<% post.comments.date_sorted.each do |c| %>
   <p><%= c.user.name %></p>
   <p><%= c.content %></p>
 <% end %>
