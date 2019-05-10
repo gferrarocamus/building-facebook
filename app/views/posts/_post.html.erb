@@ -1,0 +1,10 @@
+  <h4><%= post.user.name %></h4>
+  <p><%= post.content %></p>
+
+  <% if (like = like(post.id)) %>
+    <%= link_to 'Unlike', {controller: "likes", action: 'destroy', id: like}, method: :delete %>
+  <% else %>
+    <%= link_to 'Like', {controller: 'likes', action: 'create', id: post}, method: :post %>
+  <% end %>
+
+  | <%= post.likes.length || '0' %> likes

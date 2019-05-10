@@ -1,1 +1,2 @@
-<%= @post.content %>
+  <%= render partial: 'post', locals: {post: @post} %>
+  <%= render partial: 'comment', locals: {post: @post} %>

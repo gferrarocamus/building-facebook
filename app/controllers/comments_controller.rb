@@ -5,8 +5,8 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @c = current_user.comments.create(comments_params)
-    flash[:notice] = @c.errors.full_messages
+    comment = current_user.comments.build(comments_params)
+    flash[:alert] = "Could not publish comment" unless comment.save
     redirect_back(fallback_location: root_path)
   end
 

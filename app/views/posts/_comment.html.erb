@@ -3,9 +3,14 @@
     <%= f.text_area :content, placeholder: 'Add comment here ...' %>
   </div>
 
-  <%= hidden_field_tag 'comment[post_id]', post_id %>
+  <%= hidden_field_tag 'comment[post_id]', post.id %>
 
   <div class="actions">
     <%= f.submit "Comment" %>
   </div>
+<% end %>
+
+<% post.comments.each do |c| %>
+  <p><%= c.user.name %></p>
+  <p><%= c.content %></p>
 <% end %>
