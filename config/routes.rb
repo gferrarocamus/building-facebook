@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # get 'auth/:provider/callback', to: 'sessions#create'
+  # get 'auth/failure', to: redirect('/')
+  
   root 'posts#index'
 
   get 'users/:id', to: 'users#show', as: :user
@@ -16,7 +19,8 @@ Rails.application.routes.draw do
     sign_up: 'signup' 
   }, controllers: {
     sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
 end
