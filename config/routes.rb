@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  # get 'auth/:provider/callback', to: 'sessions#create'
-  # get 'auth/failure', to: redirect('/')
-  
   root 'posts#index'
 
   get 'users/:id', to: 'users#show', as: :user
@@ -23,4 +20,6 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
+  get 'privacy_policy', to: 'static_pages#policy'
+  get 'terms_of_service', to: 'static_pages#terms'
 end
