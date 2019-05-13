@@ -12,6 +12,7 @@ class Request < ApplicationRecord
 
   def check_inverse
     return unless Request.exists?(sender_id: receiver.id, receiver_id: sender.id)
-    self.sender, self.receiver = self.receiver, self.sender
+
+    self.sender, self.receiver = receiver, sender
   end
 end
