@@ -23,10 +23,3 @@ end
   user.posts << Post.new(content: "This is my #{n+1}th post")
   user.posts << Post.new(content: "This is my #{n+2}th post")
 end
-
-# users = User.all
-# 10.times do |n|
-#   users.each do |user|
-#     user.created_events.create!(description: "#{user.name}'s Event n.#{n + 1}")
-#   end
-# end

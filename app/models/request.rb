@@ -11,6 +11,8 @@ class Request < ApplicationRecord
   private
 
   def check_inverse
-    self.sender, self.receiver = receiver, sender if Request.find_by(sender_id: receiver.id, receiver_id: sender.id)
+    return unless Request.exists?(sender_id: receiver.id, receiver_id: sender.id)
+
+    self.sender, self.receiver = receiver, sender
   end
 end
