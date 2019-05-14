@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  root 'posts#index'
+  authenticated :user do
+    root to: 'posts#index', as: :authenticated_root
+  end
+  root to: redirect('login')
+
+  #root 'posts#index'
 
   get 'users/:id', to: 'users#show', as: :user
   get 'users', to: 'users#index'
