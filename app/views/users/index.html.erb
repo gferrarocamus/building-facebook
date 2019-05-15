@@ -3,20 +3,9 @@
 <% @users.each do |user| %>
   <%= gravatar_for user %>
   <h4><%= user.name %></h4>
-  <% if user!=current_user %>
-    <% if friendship_exists?(user.id) %>    
-      <%= form_tag("/friendships/#{friendship_id(user.id)}", method: "delete") do %>
-        <%= submit_tag("Unfriend")%>
-      <% end %>
-    <% elsif request_sent?(user.id) %>
-      <%= form_tag("/requests/#{request_id(user.id)}", method: "delete") do %>
-        <%= submit_tag("Cancel request")%>
-      <% end %>
-    <% else %>
-      <%= form_tag("/requests", method: "post") do %>
-        <%= hidden_field_tag :receiver_id, user.id %>
-        <%= submit_tag("Send friend request")%>
-      <% end %>
-    <% end %>
+
+  <% if user != current_user %>
+    <%= render partial: 'shared/user', locals: {user: user} %>
   <% end %>
+
 <% end %>

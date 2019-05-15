@@ -26,4 +26,14 @@ module UsersHelper
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}"
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
+
+  def friendship(friend_id)
+    current_user.friendships.find_by(friend_id: friend_id)
+  end
+
+  def get_request(id)
+    current_user.sent_requests.find_by(receiver_id: id) ||
+      current_user.received_requests.find_by(sender_id: id)
+    # current_user.sent_requests.find_by(receiver_id: receiver_id)
+  end
 end

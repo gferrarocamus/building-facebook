@@ -7,7 +7,7 @@ class FriendshipsController < ApplicationController
     redirect_back(fallback_location: requests_path)
   end
 
-  def destroy    
+  def destroy
     return unless (friendship = Friendship.find_by(id: params[:id]))
 
     friend_id = friendship.friend_id
