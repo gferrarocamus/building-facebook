@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class CommentsControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
+  # include Devise::Test::IntegrationHelpers
 
   test 'should show a flash after failing new comment' do
     sign_in(users(:user1))

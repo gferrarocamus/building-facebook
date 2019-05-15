@@ -34,6 +34,5 @@ module UsersHelper
   def get_request(id)
     current_user.sent_requests.find_by(receiver_id: id) ||
       current_user.received_requests.find_by(sender_id: id)
-    # current_user.sent_requests.find_by(receiver_id: receiver_id)
   end
 end
