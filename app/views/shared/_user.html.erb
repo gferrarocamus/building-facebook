@@ -1,0 +1,9 @@
+<% if friendship_exists?(user.id) %>    
+  <%= render partial: 'shared/unfriend_button', locals: {friendship: @friendship} %>
+<% elsif request_sent?(user.id) %>
+  <%= render partial: 'shared/cancel_request_button', locals: {request_id: @request.id} %>
+<% elsif request_received?(user.id) %>
+  <%= render partial: 'shared/received_request_buttons', locals: {r: @request} %>
+<% else %>
+  <%= render partial: 'shared/send_request_button', locals: {user: user} %>
+<% end %>

@@ -3,7 +3,7 @@
 <%= @user.email %>
 
 <% if @user!=current_user %>
-  <%= render partial: 'shared/user_button', locals: {user: @user} %>
+  <%= render partial: 'shared/user', locals: {user: @user} %>
 <% end %>
 
 <% @posts.each do |post| %>

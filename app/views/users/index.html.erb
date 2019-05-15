@@ -2,7 +2,7 @@
 
 <% @users.each do |user| %>
   <%= gravatar_for user %>
-  <h1><%= user.name %></h1>
+  <h4><%= user.name %></h4>
   <% if user!=current_user %>
     <% if friendship_exists?(user.id) %>    
       <%= form_tag("/friendships/#{friendship_id(user.id)}", method: "delete") do %>

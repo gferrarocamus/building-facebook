@@ -1,0 +1,4 @@
+<%= form_tag("/requests", method: "post") do %>
+  <%= hidden_field_tag :receiver_id, user.id %>
+  <%= submit_tag("Send friend request")%>
+<% end %>

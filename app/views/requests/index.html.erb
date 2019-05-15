@@ -1,9 +1,7 @@
 <% if !@requests.empty? %>
   <% @requests.each do |r| %>
     <p><%= r.sender.name %></p>
-    
-    <%= render partial: 'shared/request_buttons', locals: {r: r} %>
-
+    <%= render partial: 'shared/received_request_buttons', locals: {r: r} %>
   <% end %>
 <% else %>
   <p>No pending friend requests</p>
