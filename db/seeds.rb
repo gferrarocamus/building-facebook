@@ -19,7 +19,7 @@ end
 
 3.times do |n|
   user = User.find(n+1)
-  user.posts << Post.new(content: "This is my #{n}th post")
   user.posts << Post.new(content: "This is my #{n+1}th post")
   user.posts << Post.new(content: "This is my #{n+2}th post")
+  user.posts << Post.new(content: "This is my #{n+3}th post")
 end

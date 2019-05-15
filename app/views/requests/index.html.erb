@@ -2,15 +2,8 @@
   <% @requests.each do |r| %>
     <p><%= r.sender.name %></p>
     
-    <%= form_tag("/requests/#{r.id}", method: "delete") do %>
-      <%= submit_tag("Reject request")%>
-    <% end %>
+    <%= render partial: 'shared/request_buttons', locals: {r: r} %>
 
-    <%= form_tag("/friendships", method: "post") do %>
-      <%= hidden_field_tag :friend_id, r.sender.id %>
-    <%= submit_tag("Accept request")%>
-
-    <% end %>
   <% end %>
 <% else %>
   <p>No pending friend requests</p>

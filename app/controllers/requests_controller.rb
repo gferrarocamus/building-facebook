@@ -15,7 +15,7 @@ class RequestsController < ApplicationController
     else
       flash[:alert] = 'Could not sent request'
     end
-    redirect_to user_path(User.find(params[:receiver_id]))
+    redirect_back(fallback_location: root_path)
   end
 
   def destroy

@@ -1,0 +1,8 @@
+<%= form_tag("/requests/#{r.id}", method: "delete") do %>
+  <%= submit_tag("Reject request")%>
+<% end %>
+
+<%= form_tag("/friendships", method: "post") do %>
+  <%= hidden_field_tag :friend_id, r.sender.id %>
+  <%= submit_tag("Accept request")%>
+<% end %>
