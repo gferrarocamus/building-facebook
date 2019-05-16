@@ -1,3 +1,5 @@
+<% provide(:title, 'Notifications') %>
+
 <% if !@requests.empty? %>
   <% @requests.each do |r| %>
     <p><%= r.sender.name %></p>
