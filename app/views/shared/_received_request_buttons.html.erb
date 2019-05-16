@@ -1,8 +1,8 @@
-<%= form_tag("/requests/#{r.id}", method: "delete") do %>
+<%= form_tag("/requests/#{r.id}", method: "delete", remote: true) do %>
   <%= submit_tag("Reject request")%>
 <% end %>
 
-<%= form_tag("/friendships", method: "post") do %>
+<%= form_tag("/friendships", method: "post", remote: true) do %>
   <%= hidden_field_tag :friend_id, r.sender.id %>
   <%= submit_tag("Accept request")%>
 <% end %>

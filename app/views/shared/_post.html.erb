@@ -1,10 +1,10 @@
-  <h4><%= post.user.name %></h4>
-  <p><%= post.content %></p>
+<h4><%= post.user.name %></h4>
+<p><%= post.content %></p>
 
-  <% if (like = like(post.id)) %>
-    <%= link_to 'Unlike', {controller: "likes", action: 'destroy', id: like}, method: :delete %>
-  <% else %>
-    <%= link_to 'Like', {controller: 'likes', action: 'create', id: post}, method: :post %>
-  <% end %>
+<% if (like = like(post.id)) %>
+  <%= link_to 'Unlike', {controller: "likes", action: 'destroy', id: like}, method: :delete, remote: true %>
+<% else %>
+  <%= link_to 'Like', {controller: 'likes', action: 'create', id: post}, method: :post, remote: true %>
+<% end %>
 
-  | <%= post.likes.length || '0' %> likes
+| <%= post.likes.length || '0' %> likes
