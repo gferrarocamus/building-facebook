@@ -1,13 +1,14 @@
+# Defines a new sequence
 FactoryBot.define do
-  factory :user do
-    name { "User" }
-    email { "user@email.com" }
-    encrypted_password { "MyString" }
+  sequence :email do |n|
+    "person#{n}@example.com"
   end
-
-  factory :friend do
-    name { "Friend" }
-    email { "friend@email.com" }
-    encrypted_password { "MyString" }
+  sequence :name do |n|
+    "User #{n}"
+  end
+  factory :user do
+    email
+    name
+    password { "MyString" }
   end
 end
