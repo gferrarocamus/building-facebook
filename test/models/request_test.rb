@@ -24,7 +24,7 @@ class RequestTest < ActiveSupport::TestCase
     assert_not Request.exists?(sender_id: user2.id, receiver_id: user1.id)
     user1.sent_requests.create(receiver_id: user2.id)
     assert Request.exists?(sender_id: user1.id, receiver_id: user2.id)
-    user1.sent_requests.create(receiver_id: user2.id)
+    user2.sent_requests.create(receiver_id: user1.id)
     assert_not Request.exists?(sender_id: user2.id, receiver_id: user1.id)
   end
 end

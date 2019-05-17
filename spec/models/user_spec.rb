@@ -75,23 +75,23 @@ RSpec.describe User, type: :model do
 
     it 'should also destroy posts when user is destroyed' do
       user.posts.create(content: "MyPost")
-      count = Post.all.count
+      count = Post.count
       user.destroy
-      expect(Post.all.count).to eq(count - 1)
+      expect(Post.count).to eq(count - 1)
     end
 
     it 'should also destroy requests when user is destroyed' do
       user.sent_requests.create(receiver_id: friend.id)
-      count = Request.all.count
+      count = Request.count
       user.destroy
-      expect(Request.all.count).to eq(count - 1)
+      expect(Request.count).to eq(count - 1)
     end
 
     it 'should also destroy friendships when user is destroyed' do
       user.friendships.create(friend_id: friend.id)
-      count = Friendship.all.count
+      count = Friendship.count
       user.destroy
-      expect(Friendship.all.count).to eq(count - 2) #deletes mirrored friendship also
+      expect(Friendship.count).to eq(count - 2) #deletes mirrored friendship also
     end
 
     let(:new_friend) { create(:user) }
