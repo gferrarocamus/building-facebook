@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -22,8 +24,8 @@ RSpec.describe User, type: :model do
     end
 
     it 'should accept valid addresses' do
-    valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
-                            first.last@foo.jp alice+bob@baz.cn]
+      valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
+                           first.last@foo.jp alice+bob@baz.cn]
       valid_addresses.each do |valid_address|
         user.email = valid_address
         expect(user).to be_valid
@@ -62,10 +64,10 @@ RSpec.describe User, type: :model do
   end
 
   describe '#email_downcase' do
-    it 'should save email as lowercase' do 
-      user.email = "EXAMPLE@EMAIL.COM"
+    it 'should save email as lowercase' do
+      user.email = 'EXAMPLE@EMAIL.COM'
       user.save
-      expect("EXAMPLE@EMAIL.COM".downcase).to eq(user.reload.email)
+      expect('EXAMPLE@EMAIL.COM'.downcase).to eq(user.reload.email)
     end
   end
 
@@ -74,7 +76,7 @@ RSpec.describe User, type: :model do
     let(:friend) { create(:user) }
 
     it 'should also destroy posts when user is destroyed' do
-      user.posts.create(content: "MyPost")
+      user.posts.create(content: 'MyPost')
       count = Post.count
       user.destroy
       expect(Post.count).to eq(count - 1)
@@ -91,7 +93,7 @@ RSpec.describe User, type: :model do
       user.friendships.create(friend_id: friend.id)
       count = Friendship.count
       user.destroy
-      expect(Friendship.count).to eq(count - 2) #deletes mirrored friendship also
+      expect(Friendship.count).to eq(count - 2) # deletes mirrored friendship also
     end
 
     let(:new_friend) { create(:user) }

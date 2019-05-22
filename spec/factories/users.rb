@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Defines a new sequence
 FactoryBot.define do
   sequence :email do |n|
@@ -6,9 +8,9 @@ FactoryBot.define do
   sequence :name do |n|
     "User #{n}"
   end
-  factory :user, aliases: [:friend, :sender, :receiver] do
+  factory :user, aliases: %i[friend sender receiver] do
     email
     name
-    password { "MyString" }
+    password { 'MyString' }
   end
 end

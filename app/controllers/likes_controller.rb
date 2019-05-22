@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LikesController < ApplicationController
   def create
     Post.find_by(id: params[:id]).likes.create(user_id: current_user.id)
@@ -6,7 +8,7 @@ class LikesController < ApplicationController
 
   def destroy
     like = Like.find_by(id: params[:id])
-    like.destroy unless like.nil?
+    like&.destroy
     redirect_back(fallback_location: root_path)
   end
 end

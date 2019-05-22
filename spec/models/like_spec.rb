@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Like, type: :model do
@@ -5,7 +7,7 @@ RSpec.describe Like, type: :model do
   let(:author) { create(:user) }
   let(:post) { create(:post, user: author) }
   let(:like) { create(:like, post: post, user: user) }
-  
+
   it 'should be valid' do
     expect(like).to be_valid
   end

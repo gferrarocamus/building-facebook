@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class UsersHelperTest < ActionView::TestCase
@@ -5,7 +7,7 @@ class UsersHelperTest < ActionView::TestCase
     users(:user_1)
   end
 
-  test "request_sent? returns true if it exists, false if it does not" do
+  test 'request_sent? returns true if it exists, false if it does not' do
     sender = users(:user_1)
     receiver = users(:user_2)
     sign_in(sender)

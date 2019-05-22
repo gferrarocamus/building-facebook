@@ -24,7 +24,8 @@ class PostsController < ApplicationController
       flash[:notice] = 'Post created successfully.'
       redirect_to @post
     else
-      render 'new'
+      flash[:notice] = 'Content should not be empty.'
+      redirect_back(fallback_location: new_post_path)
     end
   end
 
