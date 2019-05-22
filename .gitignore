@@ -32,5 +32,4 @@
 
 # Ignore Spring files.
 /spring/*.pid
-
 /config/local_env.yml
