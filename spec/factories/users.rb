@@ -6,7 +6,7 @@ FactoryBot.define do
   sequence :name do |n|
     "User #{n}"
   end
-  factory :user do
+  factory :user, aliases: [:friend, :sender, :receiver] do
     email
     name
     password { "MyString" }
