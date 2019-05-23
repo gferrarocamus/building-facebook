@@ -10,8 +10,8 @@ class PostsController < ApplicationController
   end
 
   def index
-    friends = current_user.friends.pluck('friend_id') + [current_user.id]
-    @posts = Post.date_sorted.where(user_id: friends).includes(:user, :likes, comments: [:user])
+    feed_ids = current_user.feed_ids
+    @posts = Post.date_sorted.where(user_id: feed_ids).includes(:user, :likes, comments: [:user])
   end
 
   def new

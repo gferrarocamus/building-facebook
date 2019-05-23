@@ -8,8 +8,16 @@ class User < ApplicationRecord
          :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
 
-  has_many :friendships, dependent: :destroy
-  has_many :friends, through: :friendships, class_name: 'User'
+  has_many :active_friendships, dependent: :destroy,
+                                class_name: 'Friendship',
+                                foreign_key: 'active_friend_id',
+                                inverse_of: :active_friend
+  has_many :passive_friendships, dependent: :destroy,
+                                class_name: 'Friendship',
+                                foreign_key: 'passive_friend_id',
+                                inverse_of: :passive_friend
+  has_many :active_friends, through: :passive_friendships, source: :active_friend
+  has_many :passive_friends, through: :active_friendships, source: :passive_friend
 
   has_many :sent_requests, class_name: 'Request',
                            foreign_key: 'sender_id',
@@ -34,6 +42,18 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
 
   before_save :downcase_email
+
+  def feed_ids
+    active_friends.pluck('active_friend_id') + passive_friends.pluck('passive_friend_id') << self.id
+  end
+
+  def friendships
+    active_friendships + passive_friendships
+  end
+
+  def friends
+    active_friends + passive_friends
+  end
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

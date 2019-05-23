@@ -10,7 +10,8 @@ module UsersHelper
   end
 
   def friendship_exists?(friend_id)
-    Friendship.exists?(user_id: current_user.id, friend_id: friend_id)
+    Friendship.exists?(active_friend_id: current_user.id, passive_friend_id: friend_id) ||
+     Friendship.exists?(passive_friend_id: current_user.id, active_friend_id: friend_id)
   end
 
   def like_exists?(post_id)
@@ -27,8 +28,9 @@ module UsersHelper
     image_tag(gravatar_url, alt: user.name, class: 'gravatar')
   end
 
-  def friendship(friend_id)
-    current_user.friendships.find_by(friend_id: friend_id)
+  def get_friendship(friend_id)
+    current_user.active_friendships.find_by(passive_friend_id: friend_id) || 
+     current_user.passive_friendships.find_by(active_friend_id: friend_id)
   end
 
   def get_request(id)

@@ -1,5 +1,5 @@
 <% if friendship_exists?(user.id) %>    
-  <%= render partial: 'shared/unfriend_button', locals: {friendship: friendship(user.id)} %>
+  <%= render partial: 'shared/unfriend_button', locals: {friendship: get_friendship(user.id)} %>
 <% elsif request_sent?(user.id) %>
   <%= render partial: 'shared/cancel_request_button', locals: {r: get_request(user.id)} %>
 <% elsif request_received?(user.id) %>

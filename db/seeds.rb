@@ -13,8 +13,8 @@ end
 
 3.times do |n|
   user = User.find(n+1)
-  user.friends << User.find(n+2)
-  user.friends << User.find(n+3) if n%2==0
+  user.active_friends << User.find(n+2)
+  user.passive_friends << User.find(n+3) if n%2==0
 end
 
 3.times do |n|

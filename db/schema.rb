@@ -26,13 +26,13 @@ ActiveRecord::Schema.define(version: 2019_05_13_160437) do
   end
 
   create_table "friendships", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "friend_id"
+    t.bigint "active_friend_id"
+    t.bigint "passive_friend_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["friend_id"], name: "index_friendships_on_friend_id"
-    t.index ["user_id", "friend_id"], name: "index_friendships_on_user_id_and_friend_id", unique: true
-    t.index ["user_id"], name: "index_friendships_on_user_id"
+    t.index ["active_friend_id", "passive_friend_id"], name: "index_friendships_on_active_friend_id_and_passive_friend_id", unique: true
+    t.index ["active_friend_id"], name: "index_friendships_on_active_friend_id"
+    t.index ["passive_friend_id"], name: "index_friendships_on_passive_friend_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -77,8 +77,8 @@ ActiveRecord::Schema.define(version: 2019_05_13_160437) do
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
-  add_foreign_key "friendships", "users"
-  add_foreign_key "friendships", "users", column: "friend_id"
+  add_foreign_key "friendships", "users", column: "active_friend_id"
+  add_foreign_key "friendships", "users", column: "passive_friend_id"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "users"
