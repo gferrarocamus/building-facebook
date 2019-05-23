@@ -7,36 +7,39 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
   </head>
 
-  <body>
-    <div class="container">
-      <nav class="navbar navbar-expand-lg">
-        <div class="navbar-brand">
-          <%= link_to 'Social network', root_path %>
-        </div>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div class="navbar-nav">
-            <% if user_signed_in? %>
-            <%= link_to current_user.name, user_path(current_user) %>
-            <%= link_to 'Find friends', users_path %>
-            <%= link_to 'New Post', new_post_path %>
-            <%= link_to "Notifications (#{requests_count})", requests_path %>
-            <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-            <% end %>
+  <body class='gray-background'>
+    <div class="nav-container">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg px-0">
+          <div class="navbar-brand">
+            <%= link_to 'Social network', root_path %>
+          </div>        
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="material-icons">menu</i>
+          </button>
+          
+          <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <div class="navbar-nav">
+              <% if user_signed_in? %>
+              <%= link_to current_user.name, user_path(current_user) %>
+              <%= link_to 'Find friends', users_path %>
+              <%= link_to 'New Post', new_post_path %>
+              <%= link_to "Notifications (#{requests_count})", requests_path %>
+              <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+              <% end %>
+            </div>
           </div>
-        </div>
-      </nav>
-    </div><!-- div container ends -->
-
+        </nav>
+      </div><!-- div container ends -->
+    </div>  
+    
     <div class="container">
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 col-md-6 mx-auto">
           <p class="notice"><%= notice %></p>
           <p class="alert"><%= alert %></p>
           

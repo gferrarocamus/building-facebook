@@ -1,10 +1,14 @@
-<h4><%= post.user.name %></h4>
-<p><%= post.content %></p>
-
-<% if (like = like(post.id)) %>
+<div class="bg-white rounded p-3 my-4">
+  <h4><%= post.user.name %></h4>
+  <p><%= post.content %></p>
+  
+  <% if (like = like(post.id)) %>
   <%= link_to 'Unlike', {controller: "likes", action: 'destroy', id: like}, method: :delete, remote: true %>
-<% else %>
+  <% else %>
   <%= link_to 'Like', {controller: 'likes', action: 'create', id: post}, method: :post, remote: true %>
-<% end %>
+  <% end %>
+  
+  | <%= post.likes.length || '0' %> likes
 
-| <%= post.likes.length || '0' %> likes
+  <%= render partial: 'shared/comment', locals: {post: post} %>
+</div> 

@@ -1,6 +1,6 @@
 <%= form_for(@comment, remote: true) do |f| %>
   <div class="field">
-    <%= f.text_area :content, placeholder: 'Add comment here ...' %>
+    <%= f.text_area :content, placeholder: 'Add comment here ...', class: 'w-100' %>
   </div>
 
   <%= hidden_field_tag 'comment[post_id]', post.id %>

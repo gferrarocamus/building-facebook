@@ -3,7 +3,7 @@
 # ApplicationHelper module
 module ApplicationHelper
   def get_title(title = '')
-    title.empty? ? 'Social Microverse' : "#{title} | Social Microverse"
+    title.empty? ? 'Social Network' : "#{title} | Social Network"
   end
 
   def requests_count

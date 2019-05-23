@@ -15,7 +15,6 @@ gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
 # Add bootstrap
 gem 'bootstrap'
-gem 'jquery-rails'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -44,6 +43,8 @@ gem 'carrierwave'
 gem 'faker'
 gem 'mini_magick'
 gem 'will_paginate'
+# gem "font-awesome-rails"
+# gem 'material_icons'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
