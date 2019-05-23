@@ -10,19 +10,39 @@
   </head>
 
   <body>
-    <nav>
-      <%= link_to 'Social network', root_path %>
-      <% if user_signed_in? %>
-        <%= link_to current_user.name, user_path(current_user) %>
-        <%= link_to 'Find friends', users_path %>
-        <%= link_to "Notifications (#{requests_count})", requests_path %>
-        <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-      <% end %>
-    </nav>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg">
+        <div class="navbar-brand">
+          <%= link_to 'Social network', root_path %>
+        </div>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    
-    <%= yield %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="navbar-nav">
+            <% if user_signed_in? %>
+            <%= link_to current_user.name, user_path(current_user) %>
+            <%= link_to 'Find friends', users_path %>
+            <%= link_to 'New Post', new_post_path %>
+            <%= link_to "Notifications (#{requests_count})", requests_path %>
+            <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+            <% end %>
+          </div>
+        </div>
+      </nav>
+    </div><!-- div container ends -->
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <p class="notice"><%= notice %></p>
+          <p class="alert"><%= alert %></p>
+          
+          <%= yield %>
+        </div>
+      </div>  
+    </div>
   </body>
 </html>
