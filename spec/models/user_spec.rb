@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { build(:user) }
+
   it 'should be valid' do
     expect(user).to be_valid
   end
@@ -31,21 +32,25 @@ RSpec.describe User, type: :model do
         expect(user).to be_valid
       end
     end
+  end
+end
 
-    it 'should reject invalid addresses' do
-      invalid_addresses = %w[user@example,com user_at_foo.org user.name@example. foo@bar_baz.com foo@bar+baz.com]
-      invalid_addresses.each do |invalid_address|
-        user.email = invalid_address
-        user.valid?
-        expect(user.errors[:email]).to include('is invalid')
-      end
-    end
+RSpec.describe User, type: :model do
+  let(:user) { build(:user) }
 
-    it 'should reject duplicate emails' do
-      user.save
-      duplicate_user = user.dup
-      expect(duplicate_user.valid?).to be false
+  it 'should reject invalid addresses' do
+    invalid_addresses = %w[user@example,com user_at_foo.org user.name@example. foo@bar_baz.com foo@bar+baz.com]
+    invalid_addresses.each do |invalid_address|
+      user.email = invalid_address
+      user.valid?
+      expect(user.errors[:email]).to include('is invalid')
     end
+  end
+
+  it 'should reject duplicate emails' do
+    user.save
+    duplicate_user = user.dup
+    expect(duplicate_user.valid?).to be false
   end
 
   describe 'password validations' do
@@ -62,6 +67,10 @@ RSpec.describe User, type: :model do
       expect(user.errors[:password]).to include('is too short (minimum is 6 characters)')
     end
   end
+end
+
+RSpec.describe User, type: :model do
+  let(:user) { build(:user) }
 
   describe '#email_downcase' do
     it 'should save email as lowercase' do
@@ -71,31 +80,35 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'associations' do
+  describe '#destroy in associations' do
     let(:user) { create(:user) }
     let(:friend) { create(:user) }
 
-    it 'should also destroy posts when user is destroyed' do
+    it 'should also destroy posts' do
       user.posts.create(content: 'MyPost')
       count = Post.count
       user.destroy
       expect(Post.count).to eq(count - 1)
     end
 
-    it 'should also destroy requests when user is destroyed' do
+    it 'should also destroy requests' do
       user.sent_requests.create(receiver_id: friend.id)
       count = Request.count
       user.destroy
       expect(Request.count).to eq(count - 1)
     end
 
-    it 'should also destroy friendships when user is destroyed' do
-      user.friendships.create(friend_id: friend.id)
+    it 'should also destroy friendships' do
+      user.active_friendships.create(passive_friend_id: friend.id)
       count = Friendship.count
       user.destroy
-      expect(Friendship.count).to eq(count - 2) # deletes mirrored friendship also
+      expect(Friendship.count).to eq(count - 1)
     end
+  end
 
+  describe 'associations' do
+    let(:user) { create(:user) }
+    let(:friend) { create(:user) }
     let(:new_friend) { create(:user) }
     let(:new_user) { create(:user) }
 
@@ -112,7 +125,7 @@ RSpec.describe User, type: :model do
     it 'should allow adding friends' do
       expect(user.friends).not_to include(friend)
       expect(friend.friends).not_to include(user)
-      f = user.friendships.create(friend_id: friend.id)
+      f = user.active_friendships.create(passive_friend_id: friend.id)
       expect(user.friendships).to include(f)
       # expect(user.friends).to include(friend)
       # expect(friend.friends).to include(user)

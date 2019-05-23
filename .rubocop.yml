@@ -15,7 +15,7 @@ Metrics/ClassLength:
   Max: 1500
 
 Metrics/BlockLength:
-  Max: 30
+  Max: 300
 
 AllCops:
   Exclude:
@@ -24,6 +24,8 @@ AllCops:
     - 'Rakefile'
     - 'Guardfile'
     - 'test/test.helper.rb'
+    - 'db/migrate/*'
+    - 'app/controllers/users/*'
     - 'db/seeds.rb'
     - 'config/*'
     - 'bin/*'

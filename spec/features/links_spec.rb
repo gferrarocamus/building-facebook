@@ -25,7 +25,7 @@ RSpec.feature 'Links', type: :feature do
 
   scenario 'in user profile for new post' do
     login_as(user)
-    visit "/posts"
+    visit '/posts'
     expect(page).to have_link('New Post')
   end
 

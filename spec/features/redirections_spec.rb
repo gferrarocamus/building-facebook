@@ -7,19 +7,19 @@ RSpec.feature 'Redirections', type: :feature do
 
   scenario 'take user back to login page if not logged in' do
     visit '/posts'
-    expect(page).to have_current_path(new_user_session_path)    
+    expect(page).to have_current_path(new_user_session_path)
   end
 
   scenario 'take user to requested page if logged in' do
     login_as(user)
     visit '/posts'
-    expect(page).to have_current_path(posts_path)    
+    expect(page).to have_current_path(posts_path)
   end
 
   scenario 'take user back to login page after logout' do
     login_as(user)
     visit '/'
     click_link 'Logout'
-    expect(page).to have_current_path(new_user_session_path)    
-  end  
+    expect(page).to have_current_path(new_user_session_path)
+  end
 end

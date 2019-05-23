@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# FriendshipsController
 class FriendshipsController < ApplicationController
   def create
     if (request = Request.find_by(sender_id: params[:friend_id], receiver_id: current_user.id))

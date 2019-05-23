@@ -8,7 +8,7 @@ FactoryBot.define do
   sequence :name do |n|
     "User #{n}"
   end
-  factory :user, aliases: %i[friend sender receiver] do
+  factory :user, aliases: %i[active_friend passive_friend sender receiver] do
     email
     name
     password { 'MyString' }

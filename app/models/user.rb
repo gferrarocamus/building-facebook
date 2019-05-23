@@ -13,9 +13,9 @@ class User < ApplicationRecord
                                 foreign_key: 'active_friend_id',
                                 inverse_of: :active_friend
   has_many :passive_friendships, dependent: :destroy,
-                                class_name: 'Friendship',
-                                foreign_key: 'passive_friend_id',
-                                inverse_of: :passive_friend
+                                 class_name: 'Friendship',
+                                 foreign_key: 'passive_friend_id',
+                                 inverse_of: :passive_friend
   has_many :active_friends, through: :passive_friendships, source: :active_friend
   has_many :passive_friends, through: :active_friendships, source: :passive_friend
 
@@ -44,7 +44,7 @@ class User < ApplicationRecord
   before_save :downcase_email
 
   def feed_ids
-    active_friends.pluck('active_friend_id') + passive_friends.pluck('passive_friend_id') << self.id
+    active_friends.pluck('active_friend_id') + passive_friends.pluck('passive_friend_id') << id
   end
 
   def friendships
@@ -66,7 +66,7 @@ class User < ApplicationRecord
 
   def self.new_with_session(params, session)
     super.tap do |user|
-      if data = session['devise.facebook_data'] && session['devise.facebook_data']['extra']['raw_info']
+      if (data = session['devise.facebook_data']) && session['devise.facebook_data']['extra']['raw_info']
         user.email = data['email'] if user.email.blank?
       end
     end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# LikesController
 class LikesController < ApplicationController
   def create
     Post.find_by(id: params[:id]).likes.create(user_id: current_user.id)

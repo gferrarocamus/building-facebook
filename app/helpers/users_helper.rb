@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# UsersHelper
 module UsersHelper
   def request_sent?(id)
     Request.exists?(sender_id: current_user.id, receiver_id: id)
@@ -11,7 +12,7 @@ module UsersHelper
 
   def friendship_exists?(friend_id)
     Friendship.exists?(active_friend_id: current_user.id, passive_friend_id: friend_id) ||
-     Friendship.exists?(passive_friend_id: current_user.id, active_friend_id: friend_id)
+      Friendship.exists?(passive_friend_id: current_user.id, active_friend_id: friend_id)
   end
 
   def like_exists?(post_id)
@@ -29,8 +30,8 @@ module UsersHelper
   end
 
   def get_friendship(friend_id)
-    current_user.active_friendships.find_by(passive_friend_id: friend_id) || 
-     current_user.passive_friendships.find_by(active_friend_id: friend_id)
+    current_user.active_friendships.find_by(passive_friend_id: friend_id) ||
+      current_user.passive_friendships.find_by(active_friend_id: friend_id)
   end
 
   def get_request(id)
