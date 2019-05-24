@@ -3,25 +3,32 @@
 require 'rails_helper'
 
 RSpec.feature 'Users index page', type: :feature do
-  let(:user) { create(:user) }
-  let(:friend) { create(:user) }
-  let(:receiver) { create(:user) }
-  let(:friendship) { create(:friendship, user: user, friend: friend) }
-  let(:request) { create(:request, sender: user, receiver: receiver) }
   before(:example) do
-    login_as(user)
+    @user = create(:user)
+    login_as(@user)
+    @friend = create(:user)
+    @sender = create(:user)
+    @random = create(:user)
+    @receiver = create(:user)
+    @friendship = create(:friendship, active_friend: @user, passive_friend: @friend)
+    @request = create(:request, sender: @user, receiver: @receiver)
+    @request = create(:request, sender: @sender, receiver: @user)
   end
 
-  scenario 'lists all users' do
+  it 'lists all users' do
     visit '/users'
-    expect(page).to have_text(user.name)
-    expect(page).to have_text(friend.name)
-    expect(page).to have_text(receiver.name)
+    expect(page).to have_text(@user.name)
+    expect(page).to have_text(@friend.name)
+    expect(page).to have_text(@random.name)
+    expect(page).to have_text(@receiver.name)
   end
 
-  # scenario 'shows appropriate buttons' do
-  #   visit '/users'
-  #   expect(page).to have_button('Cancel request')
-  #   expect(page).to have_button('Unfriend')
-  # end
+  scenario 'shows appropriate buttons' do
+    visit '/users'
+    expect(page).to have_button('Send friend request')
+    expect(page).to have_button('Accept request')
+    expect(page).to have_button('Reject request')
+    expect(page).to have_button('Cancel request')
+    expect(page).to have_button('Unfriend')
+  end
 end
