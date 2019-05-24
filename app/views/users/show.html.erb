@@ -1,13 +1,18 @@
 <% provide(:title, @user.name) %>
 
-<%= gravatar_for @user %>
-<h1><%= @user.name %></h1>
-<%= @user.email %>
-
-<% if @user!=current_user %>
-  <%= render partial: 'shared/user', locals: {user: @user} %>
-<% end %>
-
+<div class="container mt-5 p-0 d-flex">
+  <div class="">
+    <%= gravatar_for @user %>
+  </div>
+  <div class="ml-4">
+    <h4><%= @user.name %></h4>
+    <%= @user.email %>
+    <% if @user!=current_user %>
+    <%= render partial: 'shared/user', locals: {user: @user} %>
+    <% end %>
+  </div>
+</div>
+  
 <% @posts.each do |post| %>
   <%= render partial: 'shared/post', locals: {post: post} %>
 <% end %>
