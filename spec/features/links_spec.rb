@@ -3,41 +3,49 @@
 require 'rails_helper'
 
 RSpec.feature 'Links', type: :feature do
-  let(:user) { create(:user) }
-  let(:friend) { create(:user) }
-  let(:friendship) { create(:friendship, user: user, friend: friend) }
-  let(:post) { create(:post, user: friend) }
-
-  scenario 'in header for signed in users' do
-    visit '/'
-    expect(page).to have_link('Social network')
+  before do
+    @user = create(:user)
+    @friend = create(:user)
+    create(:friendship, active_friend: @user, passive_friend: @friend)
+    create(:post, user: @friend)
   end
 
-  scenario 'in header for users not signed in' do
-    login_as(user)
-    visit '/'
+  scenario 'are displayed in header for users not signed' do
+    visit root_path
     expect(page).to have_link('Social network')
-    expect(page).to have_link(user.name)
+    expect(page).not_to have_link('Logout')
+  end
+
+  scenario 'are displayed in header for users signed in' do
+    login_as(@user)
+    visit root_path
+    expect(page).to have_link('Social network')
+    expect(page).to have_link(@user.name)
     expect(page).to have_link('Find friends')
     expect(page).to have_link('Notifications (0)')
     expect(page).to have_link('Logout')
   end
 
-  scenario 'in user profile for new post' do
-    login_as(user)
+  scenario 'are displayed in user profile for new post' do
+    login_as(@user)
     visit '/posts'
     expect(page).to have_link('New Post')
   end
 
-  # scenario 'in feed for liking and commenting on posts' do
-  #   login_as(user)
-  #   visit "/users/#{friend.id}"
-  #   expect(page).to have_button('Comment')
-  #   expect(page).to have_link('Like')
-  # end
-end
+  scenario 'are displayed in feed for liking and commenting on posts' do
+    login_as(@user)
+    visit user_path(@friend)
+    expect(page).to have_button('Comment')
+    expect(page).to have_link('Like')
+  end
 
-# TO DO
-# Post creation
-# Friendships/requests
-# Comment creation
+  scenario 'allow liking/unliking posts' do
+    login_as(@user)
+    visit root_path
+    click_link 'Like'
+    expect(page).to have_text('1 like')
+    expect(page).not_to have_button('Like')
+    click_link 'Unlike'
+    expect(page).to have_text('0 likes')
+  end
+end

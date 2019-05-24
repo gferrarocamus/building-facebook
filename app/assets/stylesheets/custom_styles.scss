@@ -3,3 +3,19 @@
 .gray-background {
   background: $background-gray;
 }
+
+.centered {
+  margin: 0 auto;
+}
+
+.button {
+  background: $network-blue !important;
+  color: white !important;
+}
+
+.alert, .notice {
+  margin: 10px 0;
+  padding: 10px;
+  background: red;
+  color: white
+}

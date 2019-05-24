@@ -18,9 +18,12 @@
           <div class="navbar-brand">
             <%= link_to 'Social network', root_path %>
           </div>        
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="material-icons">menu</i>
-          </button>
+
+          <% if user_signed_in? %>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="material-icons">menu</i>
+            </button>
+          <% end %>
           
           <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <div class="navbar-nav">
@@ -40,8 +43,9 @@
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-6 mx-auto">
-          <p class="notice"><%= notice %></p>
-          <p class="alert"><%= alert %></p>
+          <% flash.each do |key, value| %>
+            <%= content_tag :div, value, class: "flash #{key}" %>
+          <% end %>
           
           <%= yield %>
         </div>

@@ -26,7 +26,7 @@ RSpec.describe Friendship, type: :model do
     expect(friendship2).not_to be_valid
   end
 
-  it '#destroy should delete mirror friendship' do
+  it '#destroy should delete friendship' do
     friendship1 = friendship
     count = Friendship.count
     friendship1.destroy

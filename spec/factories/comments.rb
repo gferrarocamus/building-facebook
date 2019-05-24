@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :comment do
-    content { 'MyText' }
+    content { "Comment by User # #{user.id}" }
     user
     post
   end
