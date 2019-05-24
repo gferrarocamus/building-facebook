@@ -10,9 +10,9 @@ RSpec.feature 'Users index page', type: :feature do
     @sender = create(:user)
     @random = create(:user)
     @receiver = create(:user)
-    @friendship = create(:friendship, active_friend: @user, passive_friend: @friend)
-    @request = create(:request, sender: @user, receiver: @receiver)
-    @request = create(:request, sender: @sender, receiver: @user)
+    create(:friendship, active_friend: @user, passive_friend: @friend)
+    create(:request, sender: @user, receiver: @receiver)
+    create(:request, sender: @sender, receiver: @user)
   end
 
   it 'lists all users' do
@@ -23,7 +23,7 @@ RSpec.feature 'Users index page', type: :feature do
     expect(page).to have_text(@receiver.name)
   end
 
-  scenario 'shows appropriate buttons' do
+  it 'shows appropriate buttons' do
     visit '/users'
     expect(page).to have_button('Send friend request')
     expect(page).to have_button('Accept request')

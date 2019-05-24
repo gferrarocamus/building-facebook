@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :post do
-    content { 'MyText' }
+    content { "Post by User # #{user.id}" }
     user
   end
 end
