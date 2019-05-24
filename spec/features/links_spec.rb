@@ -38,15 +38,14 @@ RSpec.feature 'Links', type: :feature do
     expect(page).to have_button('Comment')
     expect(page).to have_link('Like')
   end
-  
+
   scenario 'allow liking/unliking posts' do
     login_as(@user)
     visit root_path
     click_link 'Like'
-    expect(page).to have_text('1 likes')
+    expect(page).to have_text('1 like')
     expect(page).not_to have_button('Like')
     click_link 'Unlike'
     expect(page).to have_text('0 likes')
   end
 end
-

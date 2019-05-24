@@ -7,4 +7,4 @@
   <%= link_to 'Like', {controller: 'likes', action: 'create', id: post}, method: :post, remote: true %>
 <% end %>
 
-| <%= post.likes.length || '0' %> likes
+| <%= pluralize((post.likes.length || 0), 'like') %>

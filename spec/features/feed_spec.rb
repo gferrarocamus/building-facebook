@@ -23,6 +23,8 @@ RSpec.feature 'Post index page/feed', type: :feature do
     visit root_url
     expect(page).to have_text(@own_post.content)
     expect(page).to have_text(@friend_post.content)
+    expect(page).to have_text(@own_post.user.name)
+    expect(page).to have_text(@friend_post.user.name)
     expect(page).not_to have_text(@random_post.content)
     expect(page).to have_text(@friend_comment.content)
     expect(page).to have_text(@random_comment.content)
