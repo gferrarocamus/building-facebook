@@ -32,7 +32,8 @@
   color: white;
   border: 1px solid transparent;
   border-radius: 0.25rem;
-  background: $alert-red;
+  background: rgba(190, 75, 73, 0.8);
+  border: solid 1px $alert-red;
 
   h2 {
     font-size: $font-size-base * 1.25;
@@ -40,7 +41,8 @@
 }
 
 .notice {
-  background: $info;
+  background: rgba(23, 162, 184, 0.8);
+  border: 1px solid $info;
 }
 
 .success {
@@ -49,8 +51,4 @@
 
 .gravatar img {
   border-radius: 50%;
-}
-
-.btn {
-
 }

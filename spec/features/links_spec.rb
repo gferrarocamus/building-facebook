@@ -12,14 +12,14 @@ RSpec.feature 'Links', type: :feature do
 
   scenario 'are displayed in header for users not signed' do
     visit root_path
-    expect(page).to have_link('Social network')
+    expect(page).to have_link('Social Network')
     expect(page).not_to have_link('Logout')
   end
 
   scenario 'are displayed in header for users signed in' do
     login_as(@user)
     visit root_path
-    expect(page).to have_link('Social network')
+    expect(page).to have_link('Social Network')
     expect(page).to have_link(@user.name)
     expect(page).to have_link('Find friends')
     expect(page).to have_link('Notifications (0)')
