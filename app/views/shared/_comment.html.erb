@@ -6,11 +6,18 @@
   <%= hidden_field_tag 'comment[post_id]', post.id %>
 
   <div class="actions">
-    <%= f.submit "Comment"%>
+    <%= f.submit "Comment", class: 'btn button gray-button' %>
   </div>
 <% end %>
 
 <% post.comments.date_sorted.each do |c| %>
-  <p><%= c.user.name %></p>
-  <p><%= c.content %></p>
+  <div class="d-flex my-3">
+    <div class="gravatar mr-3">    
+      <%= gravatar_for(c.user, options = {size: 40}) %>
+    </div>
+    <div class="gray-background rounded p-2 w-100">
+      <span class="bold"><%= c.user.name %></span>
+      <span><%= c.content %></span>
+    </div>
+  </div>
 <% end %>

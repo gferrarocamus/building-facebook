@@ -1,11 +1,11 @@
 <% provide(:title, 'All users') %>
 
-<div class="bg-white px-5">
+<div class="bg-white py-5 px-5">
   <h1>All users</h1>
 
   <% @users.each do |user| %>
     <div class="container mt-5 p-0 d-flex">
-      <div class="">
+      <div class="gravatar">
         <%= gravatar_for(user, options = {size: 80}) %>
       </div>
       <div class="ml-4">

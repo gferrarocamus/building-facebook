@@ -1,6 +1,12 @@
 <div class="bg-white rounded p-3 my-4">
-  <h4><%= post.user.name %></h4>
-  <p><%= post.content %></p>
+  <div class="d-flex align-items-center">
+    <div class="gravatar mr-3">    
+      <%= gravatar_for(post.user, options = {size: 60}) %>
+    </div>
+    <h4><%= post.user.name %></h4>
+  </div>
+
+  <p class="py-3"><%= post.content %></p>
   
   <% if (like = like(post.id)) %>
   <%= link_to 'Unlike', {controller: "likes", action: 'destroy', id: like}, method: :delete, remote: true %>

@@ -11,13 +11,23 @@
 }
 
 .button {
+  min-width: 100px;
+}
+
+.gray-button {
+  background: $button-gray;
+  border: 1px solid darkgray;
+}
+
+.blue-button {
   background: $network-blue !important;
   color: white !important;
 }
 
 .flash,
 #error_explanation {
-  margin: 10px 0;
+  margin-top: -($spacer * 1.5);
+  margin-bottom: 1rem;
   padding: 10px;
   color: white;
   border: 1px solid transparent;
@@ -35,4 +45,12 @@
 
 .success {
   background: $success;
+}
+
+.gravatar img {
+  border-radius: 50%;
+}
+
+.btn {
+
 }
