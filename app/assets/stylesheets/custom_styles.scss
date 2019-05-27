@@ -19,9 +19,18 @@
   border: 1px solid darkgray;
 }
 
+.gray-button:hover {
+  background: $gray-hover;
+  //#dddfe2;
+}
+
 .blue-button {
   background: $network-blue !important;
   color: white !important;
+}
+
+.blue-button:hover {
+  background: #9cb4d8 !important;
 }
 
 .flash,
