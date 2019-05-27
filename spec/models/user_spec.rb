@@ -33,10 +33,6 @@ RSpec.describe User, type: :model do
       end
     end
   end
-end
-
-RSpec.describe User, type: :model do
-  let(:user) { build(:user) }
 
   it 'should reject invalid addresses' do
     invalid_addresses = %w[user@example,com user_at_foo.org user.name@example. foo@bar_baz.com foo@bar+baz.com]
@@ -67,10 +63,6 @@ RSpec.describe User, type: :model do
       expect(user.errors[:password]).to include('is too short (minimum is 6 characters)')
     end
   end
-end
-
-RSpec.describe User, type: :model do
-  let(:user) { build(:user) }
 
   describe '#email_downcase' do
     it 'should save email as lowercase' do
@@ -85,24 +77,21 @@ RSpec.describe User, type: :model do
     let(:friend) { create(:user) }
 
     it 'should also destroy posts' do
-      user.posts.create(content: 'MyPost')
-      count = Post.count
+      post = user.posts.create(content: 'MyPost')
       user.destroy
-      expect(Post.count).to eq(count - 1)
+      expect(Post.all).not_to include(post)
     end
 
     it 'should also destroy requests' do
-      user.sent_requests.create(receiver_id: friend.id)
-      count = Request.count
+      request = user.sent_requests.create(receiver_id: friend.id)
       user.destroy
-      expect(Request.count).to eq(count - 1)
+      expect(Request.all).not_to include(request)
     end
 
     it 'should also destroy friendships' do
-      user.active_friendships.create(passive_friend_id: friend.id)
-      count = Friendship.count
+      friendship = user.active_friendships.create(passive_friend_id: friend.id)
       user.destroy
-      expect(Friendship.count).to eq(count - 1)
+      expect(Friendship.all).not_to include(friendship)
     end
   end
 
