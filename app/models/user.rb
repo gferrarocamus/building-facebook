@@ -16,8 +16,8 @@ class User < ApplicationRecord
                                  class_name: 'Friendship',
                                  foreign_key: 'passive_friend_id',
                                  inverse_of: :passive_friend
-  has_many :active_friends, through: :passive_friendships, source: :active_friend
-  has_many :passive_friends, through: :active_friendships, source: :passive_friend
+  has_many :active_friends, through: :passive_friendships
+  has_many :passive_friends, through: :active_friendships
 
   has_many :sent_requests, class_name: 'Request',
                            foreign_key: 'sender_id',
@@ -27,8 +27,8 @@ class User < ApplicationRecord
                                foreign_key: 'receiver_id',
                                inverse_of: :receiver,
                                dependent: :destroy
-  has_many :senders, through: :received_requests, source: :sender
-  has_many :receivers, through: :sent_requests, source: :receiver
+  has_many :senders, through: :received_requests
+  has_many :receivers, through: :sent_requests
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy

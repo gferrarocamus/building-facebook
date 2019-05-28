@@ -28,9 +28,11 @@ RSpec.feature 'Post index page/feed', type: :feature do
       post.comments.each do |comment|
         expect(page).to have_text(comment.content)
       end
-      post.likes.count == 1 ?
+      if post.likes.count == 1
         (expect(page).to have_text('1 like'))
-        : (expect(page).to have_text("#{post.likes.count} likes"))
+      else
+        (expect(page).to have_text("#{post.likes.count} likes"))
+      end
     end
     expect(page).not_to have_text(@random_post.content)
   end
