@@ -48,6 +48,14 @@ class User < ApplicationRecord
     active_friends + passive_friends
   end
 
+  def send_request(receiver_id)
+    sent_requests.build(receiver_id: receiver_id)
+  end
+
+  def accept_friend(active_friend_id)
+    passive_friendships.build(active_friend_id: active_friend_id)
+  end
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
