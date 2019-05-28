@@ -35,13 +35,6 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  validates :email, presence: true, length: { maximum: 255 },
-                    format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
-
-  before_save :downcase_email
 
   def feed_ids
     active_friends.pluck('active_friend_id') + passive_friends.pluck('passive_friend_id') << id
@@ -70,11 +63,5 @@ class User < ApplicationRecord
         user.email = data['email'] if user.email.blank?
       end
     end
-  end
-
-  private
-
-  def downcase_email
-    self.email = email.downcase
   end
 end

@@ -82,6 +82,6 @@ RSpec.feature 'Form', type: :feature do
       fill_in 'comment_content', with: ''
       click_button 'Comment'
       expect(page).not_to have_text('Could not publish comment.')
-    end    
+    end
   end
 end

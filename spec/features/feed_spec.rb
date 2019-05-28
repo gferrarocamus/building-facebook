@@ -10,10 +10,11 @@ RSpec.feature 'Post index page/feed', type: :feature do
     @random = create(:user)
     create(:friendship, active_friend: @user, passive_friend: @friend)
     create(:friendship, active_friend: @friend, passive_friend: @random)
-    @own_post = create(:post, user: @user)
+    @user_post = create(:post, user: @user)
     @friend_post = create(:post, user: @friend)
+    @feed_posts = @user.posts + @friend.posts
     @random_post = create(:post, user: @random)
-    @friend_comment = create(:comment, post: @friend_post, user: @friend)
+    @friend_comment = create(:comment, post: @user_post, user: @friend)
     @random_comment = create(:comment, post: @friend_post, user: @random)
     create(:like, post: @friend_post, user: @random)
     create(:like, post: @friend_post, user: @user)
@@ -21,14 +22,16 @@ RSpec.feature 'Post index page/feed', type: :feature do
 
   it 'should display posts by self and friends and comments/likes on them' do
     visit root_url
-    expect(page).to have_text(@own_post.content)
-    expect(page).to have_text(@friend_post.content)
-    expect(page).to have_text(@own_post.user.name)
-    expect(page).to have_text(@friend_post.user.name)
+    @feed_posts.each do |post|
+      expect(page).to have_text(post.content)
+      expect(page).to have_text(post.user.name)
+      post.comments.each do |comment|
+        expect(page).to have_text(comment.content)
+      end
+      post.likes.count == 1 ?
+        (expect(page).to have_text('1 like'))
+        : (expect(page).to have_text("#{post.likes.count} likes"))
+    end
     expect(page).not_to have_text(@random_post.content)
-    expect(page).to have_text(@friend_comment.content)
-    expect(page).to have_text(@random_comment.content)
-    expect(page).to have_text('2 likes')
-    expect(page).to have_text('0 likes')
   end
 end
