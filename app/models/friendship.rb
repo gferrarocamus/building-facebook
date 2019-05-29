@@ -7,7 +7,7 @@ class Friendship < ApplicationRecord
 
   validates :active_friend_id, uniqueness: { scope: :passive_friend_id }
 
-  before_create :check_inverse
+  before_validation :check_inverse
 
   private
 
