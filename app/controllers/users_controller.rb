@@ -6,22 +6,12 @@ class UsersController < ApplicationController
   before_action :new_comment, only: [:show]
 
   def index
-    @users = User.all.includes(
-      :sent_requests,
-      :received_requests,
-      :passive_friendships,
-      :active_friendships
-    )
+    @users = User.all.index_associations
   end
 
   def show
-    if (@user = User.includes(
-      { posts: [:comments] },
-      :sent_requests, :passive_friendships,
-      :active_friendships
-    ).find_by(id: params[:id])
-       )
-      @posts = User.find_by(id: params[:id]).posts.date_sorted
+    if (@user = User.show_associations.find_by(id: params[:id]))
+      @posts = User.get_posts(params[:id])
     else
       redirect_to users_path
     end

@@ -36,6 +36,30 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 50 }
 
+  scope :index_associations,
+        lambda {
+          includes(
+            :sent_requests,
+            :received_requests,
+            :passive_friendships,
+            :active_friendships
+          )
+        }
+
+  scope :show_associations,
+        lambda {
+          includes(
+            { posts: [:comments] },
+            :sent_requests,
+            :passive_friendships,
+            :active_friendships
+          )
+        }
+
+  def self.get_posts(user_id)
+    find_by(id: user_id).posts.date_sorted
+  end
+
   def feed_ids
     active_friends.pluck('active_friend_id') + passive_friends.pluck('passive_friend_id') << id
   end

@@ -8,8 +8,17 @@ class Friendship < ApplicationRecord
   validates :active_friend_id, uniqueness: { scope: :passive_friend_id }
 
   before_validation :check_inverse
+  after_save :delete_request
+
+  def request?
+    Request.exists?(sender_id: active_friend.id, receiver_id: passive_friend.id)
+  end
 
   private
+
+  def delete_request
+    Request.find_by(sender_id: active_friend.id, receiver_id: passive_friend.id).destroy
+  end
 
   def check_inverse
     return unless Friendship.exists?(active_friend_id: passive_friend.id, passive_friend_id: active_friend.id)

@@ -3,10 +3,10 @@
 # FriendshipsController
 class FriendshipsController < ApplicationController
   def create
-    if (request = Request.find_by(sender_id: params[:friend_id], receiver_id: current_user.id))
-      friendship = current_user.accept_friend(params[:friend_id])
-      request.destroy if friendship.save
-    end
+    friendship = current_user.accept_friend(params[:friend_id])
+    return unless friendship.request?
+
+    friendship.save
     redirect_back(fallback_location: requests_path)
   end
 
