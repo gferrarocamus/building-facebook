@@ -17,7 +17,9 @@ class Friendship < ApplicationRecord
   private
 
   def delete_request
-    Request.find_by(sender_id: active_friend.id, receiver_id: passive_friend.id).destroy
+    return unless (request = Request.find_by(sender_id: active_friend.id, receiver_id: passive_friend.id))
+
+    request.destroy
   end
 
   def check_inverse

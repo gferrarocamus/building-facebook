@@ -12,7 +12,7 @@ RSpec.describe Request, type: :model do
   end
 
   it 'should not be a valid request' do
-    invalid_request = build(:request, sender: user, receiver: nil)
+    invalid_request = request.dup
     expect(invalid_request).not_to be_valid
   end
 
@@ -25,6 +25,6 @@ RSpec.describe Request, type: :model do
   it 'should not allow inverse requests' do
     request1 = request
     request2 = build(:request, sender: request1.receiver, receiver: request1.sender)
-    expect { request2.save! }.to raise_error
+    expect(request2).not_to be_valid
   end
 end

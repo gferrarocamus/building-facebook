@@ -9,4 +9,13 @@ class Post < ApplicationRecord
   validates :content, presence: true
 
   scope :date_sorted, -> { order(created_at: :desc) }
+
+  scope :with_associations,
+        lambda {
+          includes(
+            :user,
+            :likes,
+            comments: [:user]
+          )
+        }
 end

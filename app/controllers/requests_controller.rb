@@ -5,7 +5,7 @@ class RequestsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @requests = Request.includes(:sender).where(receiver_id: current_user.id)
+    @requests = current_user.received_requests.includes(:sender)
   end
 
   def create
@@ -21,8 +21,11 @@ class RequestsController < ApplicationController
   def destroy
     return unless (request = Request.find_by(id: params[:id]))
 
-    receiver_id = request.receiver_id
-    request.destroy
-    redirect_back(fallback_location: user_path(User.find(receiver_id)))
+    flash[:notice] = if request.destroy
+                       'Request cancelled'
+                     else
+                       'Could not cancel that request'
+                     end
+    redirect_back(fallback_location: users_path)
   end
 end

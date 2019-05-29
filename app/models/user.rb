@@ -60,8 +60,9 @@ class User < ApplicationRecord
     find_by(id: user_id).posts.date_sorted
   end
 
-  def feed_ids
-    active_friends.pluck('active_friend_id') + passive_friends.pluck('passive_friend_id') << id
+  def feed_posts
+    ids = active_friends.pluck('active_friend_id') + passive_friends.pluck('passive_friend_id') << id
+    Post.date_sorted.where(user_id: ids).with_associations
   end
 
   def friendships

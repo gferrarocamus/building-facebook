@@ -24,6 +24,7 @@ RSpec.describe User, type: :model do
   describe '#destroy in associations' do
     let(:user) { create(:user) }
     let(:friend) { create(:user) }
+    let(:friendship) { create(:friendship, active_friend: user, passive_friend: friend) }
 
     it 'should also destroy posts' do
       post = user.posts.create(content: 'MyPost')
@@ -38,7 +39,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'should also destroy friendships' do
-      friendship = user.active_friendships.create(passive_friend_id: friend.id)
+      friendship = friendship
       user.destroy
       expect(Friendship.all).not_to include(friendship)
     end
@@ -49,6 +50,7 @@ RSpec.describe User, type: :model do
     let(:friend) { create(:user) }
     let(:new_friend) { create(:user) }
     let(:new_user) { create(:user) }
+    let(:request) { create(:request, sender: new_user, receiver: new_friend) }
 
     it 'should allow sending requests' do
       expect(user.receivers).not_to include(friend)

@@ -13,7 +13,11 @@ class FriendshipsController < ApplicationController
   def destroy
     return unless (friendship = Friendship.find_by(id: params[:id]))
 
-    friendship.destroy
+    flash[:notice] = if friendship.destroy
+                       "You're not friends anymore!"
+                     else
+                       'Could not unfriend that person'
+                     end
     redirect_back(fallback_location: users_path)
   end
 end
