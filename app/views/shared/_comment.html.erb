@@ -1,0 +1,16 @@
+<%= form_for(@comment, remote: true) do |f| %>
+  <div class="field">
+    <%= f.text_area :content, placeholder: 'Add comment here ...' %>
+  </div>
+
+  <%= hidden_field_tag 'comment[post_id]', post.id %>
+
+  <div class="actions">
+    <%= f.submit "Comment" %>
+  </div>
+<% end %>
+
+<% post.comments.date_sorted.each do |c| %>
+  <p><%= c.user.name %></p>
+  <p><%= c.content %></p>
+<% end %>

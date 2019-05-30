@@ -1,0 +1,3 @@
+<%= form_tag("/friendships/#{friendship.id}", method: "delete", remote: true) do %>
+  <%= submit_tag("Unfriend")%>
+<% end %>

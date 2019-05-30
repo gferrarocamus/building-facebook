@@ -2,21 +2,29 @@
 
 # Friendship Model
 class Friendship < ApplicationRecord
-  belongs_to :user
-  belongs_to :friend, class_name: 'User'
+  belongs_to :passive_friend, class_name: 'User'
+  belongs_to :active_friend, class_name: 'User'
 
-  after_save :mirror_friendship
-  after_destroy :mirror_destruction
+  validates :active_friend_id, uniqueness: { scope: :passive_friend_id }
+
+  before_validation :check_inverse
+  after_save :delete_request
+
+  def request?
+    Request.exists?(sender_id: active_friend.id, receiver_id: passive_friend.id)
+  end
 
   private
 
-  def mirror_friendship
-    Friendship.find_or_create_by(user_id: friend.id, friend_id: user.id)
+  def delete_request
+    return unless (request = Request.find_by(sender_id: active_friend.id, receiver_id: passive_friend.id))
+
+    request.destroy
   end
 
-  def mirror_destruction
-    if friendship = Friendship.find_by(user_id: friend.id, friend_id: user.id)
-      friendship.destroy
-    end
+  def check_inverse
+    return unless Friendship.exists?(active_friend_id: passive_friend.id, passive_friend_id: active_friend.id)
+
+    self.active_friend, self.passive_friend = passive_friend, active_friend
   end
 end

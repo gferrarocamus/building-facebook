@@ -41,9 +41,9 @@ gem 'rubocop-performance'
 gem 'bootstrap-will_paginate'
 gem 'carrierwave'
 gem 'faker'
-gem 'mini_magick'
 gem 'will_paginate'
 
+gem 'mini_magick'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
@@ -71,12 +71,15 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+  gem 'factory_bot_rails'
+  gem 'launchy'
+end
 
-  gem 'rails-controller-testing'
-  gem 'minitest'
-  gem 'minitest-reporters'
+group :development, :test do
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails'
   gem 'guard'
-  gem 'guard-minitest'
+  gem 'guard-rspec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
