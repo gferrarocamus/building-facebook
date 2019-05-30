@@ -16,8 +16,8 @@ class User < ApplicationRecord
                                  class_name: 'Friendship',
                                  foreign_key: 'passive_friend_id',
                                  inverse_of: :passive_friend
-  has_many :active_friends, through: :passive_friendships, source: :active_friend
-  has_many :passive_friends, through: :active_friendships, source: :passive_friend
+  has_many :active_friends, through: :passive_friendships
+  has_many :passive_friends, through: :active_friendships
 
   has_many :sent_requests, class_name: 'Request',
                            foreign_key: 'sender_id',
@@ -27,24 +27,42 @@ class User < ApplicationRecord
                                foreign_key: 'receiver_id',
                                inverse_of: :receiver,
                                dependent: :destroy
-  has_many :senders, through: :received_requests, source: :sender
-  has_many :receivers, through: :sent_requests, source: :receiver
+  has_many :senders, through: :received_requests
+  has_many :receivers, through: :sent_requests
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  validates :email, presence: true, length: { maximum: 255 },
-                    format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
 
-  before_save :downcase_email
+  scope :index_associations,
+        lambda {
+          includes(
+            :sent_requests,
+            :received_requests,
+            :passive_friendships,
+            :active_friendships
+          )
+        }
 
-  def feed_ids
-    active_friends.pluck('active_friend_id') + passive_friends.pluck('passive_friend_id') << id
+  scope :show_associations,
+        lambda {
+          includes(
+            { posts: [:comments] },
+            :sent_requests,
+            :passive_friendships,
+            :active_friendships
+          )
+        }
+
+  def self.get_posts(user_id)
+    find_by(id: user_id).posts.date_sorted
+  end
+
+  def feed_posts
+    ids = active_friends.pluck('active_friend_id') + passive_friends.pluck('passive_friend_id') << id
+    Post.date_sorted.where(user_id: ids).with_associations
   end
 
   def friendships
@@ -53,6 +71,14 @@ class User < ApplicationRecord
 
   def friends
     active_friends + passive_friends
+  end
+
+  def send_request(receiver_id)
+    sent_requests.build(receiver_id: receiver_id)
+  end
+
+  def accept_friend(active_friend_id)
+    passive_friendships.build(active_friend_id: active_friend_id)
   end
 
   def self.from_omniauth(auth)
@@ -70,11 +96,5 @@ class User < ApplicationRecord
         user.email = data['email'] if user.email.blank?
       end
     end
-  end
-
-  private
-
-  def downcase_email
-    self.email = email.downcase
   end
 end

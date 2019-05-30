@@ -6,12 +6,11 @@ class PostsController < ApplicationController
   before_action :new_comment, only: %i[show index]
 
   def show
-    @post = Post.date_sorted.includes(:user, :likes, comments: [:user]).find(params[:id])
+    @post = Post.with_associations.find(params[:id])
   end
 
   def index
-    feed_ids = current_user.feed_ids
-    @posts = Post.date_sorted.where(user_id: feed_ids).includes(:user, :likes, comments: [:user])
+    @posts = current_user.feed_posts
   end
 
   def new

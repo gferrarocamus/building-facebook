@@ -3,17 +3,21 @@
 # FriendshipsController
 class FriendshipsController < ApplicationController
   def create
-    if (request = Request.find_by(sender_id: params[:friend_id], receiver_id: current_user.id))
-      current_user.passive_friendships.create(active_friend_id: params[:friend_id])
-      request.destroy
-    end
+    friendship = current_user.accept_friend(params[:friend_id])
+    return unless friendship.request?
+
+    friendship.save
     redirect_back(fallback_location: requests_path)
   end
 
   def destroy
     return unless (friendship = Friendship.find_by(id: params[:id]))
 
-    friendship.destroy
+    flash[:notice] = if friendship.destroy
+                       "You're not friends anymore!"
+                     else
+                       'Could not unfriend that person'
+                     end
     redirect_back(fallback_location: users_path)
   end
 end

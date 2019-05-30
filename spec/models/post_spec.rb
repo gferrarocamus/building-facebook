@@ -5,21 +5,17 @@ require 'rails_helper'
 RSpec.describe Post, type: :model do
   let(:user) { create(:user) }
   let(:post) { create(:post, user: user) }
-
-  it 'should be valid' do
-    expect(post).to be_valid
-  end
+  let(:empty) { build(:post, user: user, content: '') }
+  let(:comment) { build(:comment, post: post, user: user, content: 'My comment') }
 
   describe 'content validation' do
     it 'should require content text' do
-      post.content = ''
-      post.valid?
-      expect(post.errors.messages.keys).to include(:content)
+      empty.valid?
+      expect(empty.errors.messages.keys).to include(:content)
     end
   end
 
   it 'should allow comments' do
-    comment = post.comments.build(content: 'My coment', user_id: user.id)
     expect(comment).to be_valid
     comment.save
     expect { post.destroy }.to \

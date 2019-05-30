@@ -12,7 +12,9 @@ RSpec.describe Friendship, type: :model do
   end
 
   it 'should not be a valid friendship' do
-    invalid_friendship = build(:friendship, active_friend: user, passive_friend: nil)
+    invalid_friendship = build(:friendship,
+                               active_friend: friendship.passive_friend,
+                               passive_friend: friendship.active_friend)
     expect(invalid_friendship).not_to be_valid
   end
 

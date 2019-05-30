@@ -5,104 +5,43 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user) { build(:user) }
 
-  it 'should be valid' do
-    expect(user).to be_valid
-  end
-
-  describe 'name validation' do
-    it 'should require a name' do
-      user.name = ''
-      user.valid?
-      expect(user.errors.messages.keys).to include(:name)
-    end
-  end
-
-  describe 'email validations' do
-    it 'should require an email' do
-      user.email = ''
-      user.valid?
-      expect(user.errors.messages.keys).to include(:email)
-    end
-
-    it 'should accept valid addresses' do
-      valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
-                           first.last@foo.jp alice+bob@baz.cn]
-      valid_addresses.each do |valid_address|
-        user.email = valid_address
+  describe 'validations' do
+    context 'with complete user details' do
+      it 'is valid' do
         expect(user).to be_valid
       end
     end
-  end
-end
 
-RSpec.describe User, type: :model do
-  let(:user) { build(:user) }
-
-  it 'should reject invalid addresses' do
-    invalid_addresses = %w[user@example,com user_at_foo.org user.name@example. foo@bar_baz.com foo@bar+baz.com]
-    invalid_addresses.each do |invalid_address|
-      user.email = invalid_address
-      user.valid?
-      expect(user.errors[:email]).to include('is invalid')
-    end
-  end
-
-  it 'should reject duplicate emails' do
-    user.save
-    duplicate_user = user.dup
-    expect(duplicate_user.valid?).to be false
-  end
-
-  describe 'password validations' do
-    it 'should require a password' do
-      user.password = ''
-      user.valid?
-      expect(user.errors.messages.keys).to include(:password)
-    end
-
-    it 'should require a password with minumum length of 6 characters' do
-      user.password = '12345'
-      user.valid?
-      expect(user.errors.messages.keys).to include(:password)
-      expect(user.errors[:password]).to include('is too short (minimum is 6 characters)')
-    end
-  end
-end
-
-RSpec.describe User, type: :model do
-  let(:user) { build(:user) }
-
-  describe '#email_downcase' do
-    it 'should save email as lowercase' do
-      user.email = 'EXAMPLE@EMAIL.COM'
-      user.save
-      expect('EXAMPLE@EMAIL.COM'.downcase).to eq(user.reload.email)
+    context 'with no name' do
+      it 'is invalid' do
+        user.name = ''
+        user.valid?
+        expect(user.errors.messages.keys).to include(:name)
+      end
     end
   end
 
   describe '#destroy in associations' do
     let(:user) { create(:user) }
     let(:friend) { create(:user) }
+    let(:friendship) { create(:friendship, active_friend: user, passive_friend: friend) }
 
     it 'should also destroy posts' do
-      user.posts.create(content: 'MyPost')
-      count = Post.count
+      post = user.posts.create(content: 'MyPost')
       user.destroy
-      expect(Post.count).to eq(count - 1)
+      expect(Post.all).not_to include(post)
     end
 
     it 'should also destroy requests' do
-      user.sent_requests.create(receiver_id: friend.id)
-      count = Request.count
+      request = user.sent_requests.create(receiver_id: friend.id)
       user.destroy
-      expect(Request.count).to eq(count - 1)
+      expect(Request.all).not_to include(request)
     end
 
     it 'should also destroy friendships' do
-      user.active_friendships.create(passive_friend_id: friend.id)
-      count = Friendship.count
+      friendship = friendship
       user.destroy
-      expect(Friendship.count).to eq(count - 1)
+      expect(Friendship.all).not_to include(friendship)
     end
   end
 
@@ -111,24 +50,31 @@ RSpec.describe User, type: :model do
     let(:friend) { create(:user) }
     let(:new_friend) { create(:user) }
     let(:new_user) { create(:user) }
+    let(:request) { create(:request, sender: new_user, receiver: new_friend) }
 
     it 'should allow sending requests' do
       expect(user.receivers).not_to include(friend)
       expect(friend.senders).not_to include(user)
-      r = user.sent_requests.create(receiver_id: friend.id)
+      r = user.send_request(friend.id)
+      r.save
+      user.reload
+      friend.reload
       expect(user.sent_requests).to include(r)
       expect(friend.received_requests).to include(r)
-      # expect(user.receivers).to include(friend)
-      # expect(friend.senders).to include(user)
+      expect(user.receivers).to include(friend)
+      expect(friend.senders).to include(user)
     end
 
     it 'should allow adding friends' do
       expect(user.friends).not_to include(friend)
       expect(friend.friends).not_to include(user)
-      f = user.active_friendships.create(passive_friend_id: friend.id)
+      f = user.accept_friend(friend.id)
+      f.save
+      user.reload
+      friend.reload
       expect(user.friendships).to include(f)
-      # expect(user.friends).to include(friend)
-      # expect(friend.friends).to include(user)
+      expect(user.active_friends).to include(friend)
+      expect(friend.passive_friends).to include(user)
     end
   end
 end

@@ -5,11 +5,11 @@ class RequestsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @requests = Request.includes(:sender).where(receiver_id: current_user.id)
+    @requests = current_user.received_requests.includes(:sender)
   end
 
   def create
-    @request = Request.new(sender_id: current_user.id, receiver_id: params[:receiver_id])
+    @request = current_user.send_request(params[:receiver_id])
     if @request.save
       flash[:success] = 'Request sent successfully'
     else
@@ -21,8 +21,11 @@ class RequestsController < ApplicationController
   def destroy
     return unless (request = Request.find_by(id: params[:id]))
 
-    receiver_id = request.receiver_id
-    request.destroy
-    redirect_back(fallback_location: user_path(User.find(receiver_id)))
+    flash[:notice] = if request.destroy
+                       'Request cancelled'
+                     else
+                       'Could not cancel that request'
+                     end
+    redirect_back(fallback_location: users_path)
   end
 end
