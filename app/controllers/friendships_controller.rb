@@ -4,9 +4,11 @@
 class FriendshipsController < ApplicationController
   def create
     friendship = current_user.accept_friend(params[:friend_id])
-    return unless friendship.request?
-
-    friendship.save
+    if friendship.request?
+      flash[:success] = 'You are now friends' if friendship.save
+    else
+      flash[:notice] = 'No request found'
+    end
     redirect_back(fallback_location: requests_path)
   end
 

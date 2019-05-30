@@ -22,9 +22,9 @@ class RequestsController < ApplicationController
     return unless (request = Request.find_by(id: params[:id]))
 
     flash[:notice] = if request.destroy
-                       'Request cancelled'
+                       'Request removed'
                      else
-                       'Could not cancel that request'
+                       'Could not remove that request'
                      end
     redirect_back(fallback_location: users_path)
   end

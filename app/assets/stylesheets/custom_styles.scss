@@ -55,7 +55,8 @@
 }
 
 .success {
-  background: $success;
+  background: rgba(65, 167, 69, 0.8);
+  border: 1px solid $success;
 }
 
 .gravatar img {

@@ -11,7 +11,8 @@
         </div>
         <div class="ml-4">
           <h5><%= link_to r.sender.name, user_path(r.sender) %></h5>
-          <%= render partial: 'shared/user', locals: {user: r.sender} %>
+          <%= render partial: 'shared/received_request_buttons', locals: {r: r} %>
+          
         </div>
       </div>
     <% end %>
