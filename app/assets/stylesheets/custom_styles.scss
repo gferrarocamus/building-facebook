@@ -62,3 +62,14 @@
 .gravatar img {
   border-radius: 50%;
 }
+
+.field {
+  margin-bottom: $spacer * .5;
+}
+
+.field .field_with_errors:first-child::after {
+  color: $alert-red;
+  display: inline-block;
+  content: "*";
+  margin-left: 2px;
+}
