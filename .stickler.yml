@@ -1,5 +1,19 @@
 linters:
-    rubocop:
-        display_cop_names: true
-        fixer: true
-        require: rubocop-performance
+  rubocop:
+    display_cop_names: true
+    fixer: true
+    require: rubocop-performance
+files:
+  ignore:
+    - "db/schema.rb"
+    - "Gemfile"
+    - "Rakefile"
+    - "Guardfile"
+    - "test/test.helper.rb"
+    - "db/migrate/*"
+    - "app/controllers/users/*"
+    - "db/seeds.rb"
+    - "config/*"
+    - "bin/*"
+    - "config/initializers/devise.rb"
+    - "app/mailers/application_mailer.rb"
