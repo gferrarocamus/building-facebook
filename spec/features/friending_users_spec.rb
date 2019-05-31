@@ -6,8 +6,8 @@ RSpec.feature 'Friending users', type: :feature do
   before do
     @user = create(:user)
     @friend = create(:user)
-    # @friendship = create(:friendship, active_friend: @user, passive_friend: @friend)
-    # @post = create(:post, user: @friend)
+    @sender = create(:user)
+    @request = create(:request, sender: @sender, receiver: @user)
   end
 
   scenario 'should work' do
@@ -27,5 +27,14 @@ RSpec.feature 'Friending users', type: :feature do
     expect(page).to have_button('Unfriend')
     click_button 'Unfriend'
     expect(page).to have_button('Send friend request')
+  end
+
+  scenario 'should not be possible without a valid request' do
+    login_as(@user)
+    visit requests_path
+    expect(page).to have_button('Accept request')
+    @request.destroy
+    click_button 'Accept request'
+    expect(page).to have_text('No request found')
   end
 end

@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.feature 'Post index page/feed', type: :feature do
   before(:example) do
     @user = create(:user)
-    login_as(@user)
     @friend = create(:user)
     @random = create(:user)
     create(:friendship, active_friend: @user, passive_friend: @friend)
@@ -20,7 +19,26 @@ RSpec.feature 'Post index page/feed', type: :feature do
     create(:like, post: @friend_post, user: @user)
   end
 
+  scenario 'should take user back to login page if not logged in' do
+    visit '/posts'
+    expect(page).to have_current_path(new_user_session_path)
+  end
+
+  scenario 'should take user to feed if logged in' do
+    login_as(@user)
+    visit '/posts'
+    expect(page).to have_current_path(posts_path)
+  end
+
+  scenario 'should display links for liking and commenting on posts' do
+    login_as(@user)
+    visit user_path(@friend)
+    expect(page).to have_button('Comment')
+    expect(page).to have_link('Unlike')
+  end
+
   it 'should display posts by self and friends and comments/likes on them' do
+    login_as(@user)
     visit root_url
     @feed_posts.each do |post|
       expect(page).to have_text(post.content)
