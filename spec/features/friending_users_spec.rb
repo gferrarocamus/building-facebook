@@ -7,12 +7,13 @@ RSpec.feature 'Friending users', type: :feature do
     @user = create(:user)
     @friend = create(:user)
     @sender = create(:user)
+    @receiver = create(:user)
     @request = create(:request, sender: @sender, receiver: @user)
   end
 
   scenario 'should work' do
     login_as(@user)
-    visit users_path
+    visit user_path(@friend)
     click_button 'Send friend request'
     expect(page).to have_button('Cancel request')
     logout(@user)
@@ -36,5 +37,16 @@ RSpec.feature 'Friending users', type: :feature do
     @request.destroy
     click_button 'Accept request'
     expect(page).to have_text('No request found')
+  end
+
+  scenario 'should not be able to sent request if there already is one' do
+    login_as(@sender)
+    visit user_path(@receiver)
+    expect(page).to have_button('Send friend request')
+    create(:request, sender: @receiver, receiver: @sender)
+    click_button 'Send friend request'
+    expect(page).to have_text('Could not send request')
+    expect(page).to have_button('Accept request')
+    expect(page).to have_button('Reject request')
   end
 end

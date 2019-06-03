@@ -5,6 +5,9 @@ require 'rails_helper'
 RSpec.feature 'User profile', type: :feature do
   before do
     @user = create(:user)
+    @friend = create(:user)
+    @random = create(:user)
+    create(:friendship, active_friend: @user, passive_friend: @friend)
     @post = create(:post, user: @user)
   end
 
@@ -19,5 +22,17 @@ RSpec.feature 'User profile', type: :feature do
     end
     expect(page).to have_link('New Post')
     expect(page).to have_link('Edit profile')
+  end
+
+  scenario 'should see friends profile with correct elements' do
+    login_as(@user)
+    visit user_path(@friend)
+    expect(page).to have_button('Unfriend')
+  end
+
+  scenario 'should see not friend profile with correct elements' do
+    login_as(@user)
+    visit user_path(@random)
+    expect(page).to have_button('Send friend request')
   end
 end

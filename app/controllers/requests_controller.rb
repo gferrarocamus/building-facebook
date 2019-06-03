@@ -13,7 +13,7 @@ class RequestsController < ApplicationController
     if @request.save
       flash[:success] = 'Request sent successfully'
     else
-      flash[:alert] = 'Could not sent request'
+      flash[:alert] = 'Could not send request'
     end
     redirect_back(fallback_location: root_path)
   end
