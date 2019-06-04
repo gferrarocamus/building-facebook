@@ -1,0 +1,75 @@
+.gray-background {
+  background: $background-gray;
+}
+
+.centered {
+  margin: 0 auto;
+}
+
+.bold {
+  font-weight: 900;
+}
+
+.button {
+  min-width: 100px;
+}
+
+.gray-button {
+  background: $button-gray;
+  border: 1px solid darkgray;
+}
+
+.gray-button:hover {
+  background: $gray-hover;
+  //#dddfe2;
+}
+
+.blue-button {
+  background: $network-blue !important;
+  color: white !important;
+}
+
+.blue-button:hover {
+  background: #9cb4d8 !important;
+}
+
+.flash,
+#error_explanation {
+  margin-top: -($spacer * 1.5);
+  margin-bottom: 1rem;
+  padding: 10px;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  background: rgba(190, 75, 73, 0.8);
+  border: solid 1px $alert-red;
+
+  h2 {
+    font-size: $font-size-base * 1.25;
+  }
+}
+
+.notice {
+  background: rgba(23, 162, 184, 0.8);
+  border: 1px solid $info;
+}
+
+.success {
+  background: rgba(65, 167, 69, 0.8);
+  border: 1px solid $success;
+}
+
+.gravatar img {
+  border-radius: 50%;
+}
+
+.field {
+  margin-bottom: $spacer * .5;
+}
+
+.field .field_with_errors:first-child::after {
+  color: $alert-red;
+  display: inline-block;
+  content: "*";
+  margin-left: 2px;
+}

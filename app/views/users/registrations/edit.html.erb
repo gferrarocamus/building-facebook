@@ -1,0 +1,16 @@
+<% provide(:title, 'Edit Profile') %>
+<% provide(:button_text, 'Update') %>
+
+<%= render "devise/shared/error_messages", resource: resource %>
+
+<div class="centered">
+  <h2>Edit <%= resource_name.to_s.humanize %></h2>
+  
+  <%= render 'users/shared/registration_form' %>
+
+  <h3 class="mt-5">Cancel my account</h3>
+
+  <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn button btn-danger' %></p>
+
+  <%= link_to "Back", :back %>
+</div>

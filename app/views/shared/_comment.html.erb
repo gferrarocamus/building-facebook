@@ -1,0 +1,23 @@
+<%= form_for(@comment, remote: true) do |f| %>
+  <div class="field">
+    <%= f.text_area :content, placeholder: 'Add comment here...', class: 'w-100 gray-background rounded mt-3 p-1' %>
+  </div>
+
+  <%= hidden_field_tag 'comment[post_id]', post.id %>
+
+  <div class="actions">
+    <%= f.submit "Comment", class: 'btn button gray-button d-block' %>
+  </div>
+<% end %>
+
+<% post.comments.date_sorted.each do |c| %>
+  <div class="d-flex my-3">
+    <div class="gravatar mr-3">    
+      <%= gravatar_for(c.user, options = {size: 40}) %>
+    </div>
+    <div class="gray-background rounded p-2 w-100">
+      <span class="bold"><%= link_to c.user.name, user_path(c.user) %></span>
+      <span><%= c.content %></span>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,24 @@
+@import "vars";
+
+.nav-container {
+  background: $network-blue;
+  color: white;
+
+  a,
+  .material-icons {
+    color: white;
+  }
+
+  a:hover {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+  }
+
+  .navbar-nav a {
+    margin-right: 15px;
+  }
+
+  .navbar-nav a:last-child {
+    margin-right: 0px;
+  }
+}

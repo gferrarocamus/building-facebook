@@ -1,0 +1,19 @@
+<div class="bg-white rounded p-3 mb-4">
+  <div class="d-flex align-items-center">
+    <div class="gravatar mr-3">    
+      <%= gravatar_for(post.user, options = {size: 60}) %>
+    </div>
+    <h4><%= link_to post.user.name, user_path(post.user) %></h4>
+  </div>
+
+  <p class="py-3"><%= post.content %></p>
+
+  <% if (like = like(post.id)) %>
+    <%= link_to 'Unlike', {controller: "likes", action: 'destroy', id: like}, method: :delete, remote: true %>
+  <% else %>
+    <%= link_to 'Like', {controller: 'likes', action: 'create', id: post}, method: :post, remote: true %>
+  <% end %>
+| <%= pluralize((post.likes.length || 0), 'like')%>
+
+  <%= render partial: 'shared/comment', locals: {post: post} %>
+</div>

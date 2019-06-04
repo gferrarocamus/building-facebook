@@ -1,0 +1,22 @@
+<% provide(:title, 'Notifications') %>
+
+<div class="rounded bg-white p-4">
+  <% if !@requests.empty? %>
+    <h2>Pending requests</h2>
+
+    <% @requests.each do |r| %>
+      <div class="d-flex mt-5">
+        <div class="gravatar">
+          <%= gravatar_for(r.sender, options = {size: 80}) %>
+        </div>
+        <div class="ml-4">
+          <h5><%= link_to r.sender.name, user_path(r.sender) %></h5>
+          <%= render partial: 'shared/received_request_buttons', locals: {r: r} %>
+          
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <h4>No pending friend requests</h4>
+  <% end %>
+</div>

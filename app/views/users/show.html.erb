@@ -1,0 +1,21 @@
+<% provide(:title, @user.name) %>
+
+<div class="d-flex align-items-center mb-4">
+  <div class="gravatar">
+    <%= gravatar_for @user %>
+  </div>
+  <div class="ml-4">
+    <h4><%= @user.name %></h4>
+    <%= @user.email %>
+    <% if @user == current_user %>
+      <br>
+      <small><%= link_to 'Edit profile', edit_user_registration_path%></small>
+    <% else %>
+      <%= render partial: 'shared/user', locals: {user: @user} %>
+    <% end %>
+  </div>
+</div>
+  
+<% @posts.each do |post| %>
+  <%= render partial: 'shared/post', locals: {post: post} %>
+<% end %>

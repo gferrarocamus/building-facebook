@@ -1,0 +1,10 @@
+<div class="d-flex">
+  <%= form_tag("/friendships", method: "post", remote: true) do %>
+    <%= hidden_field_tag :friend_id, r.sender.id %>
+    <%= submit_tag("Accept request", class: 'btn button gray-button mr-1') %>
+  <% end %>
+
+  <%= form_tag("/requests/#{r.id}", method: "delete", remote: true) do %>
+    <%= submit_tag("Reject request", class: 'btn button gray-button') %>
+  <% end %>
+</div>

@@ -1,0 +1,3 @@
+<%= form_tag("/requests/#{r.id}", method: "delete", remote: true) do %>
+  <%= submit_tag("Cancel request", class: 'btn button gray-button')%>
+<% end %>
