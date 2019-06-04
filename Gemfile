@@ -14,7 +14,7 @@ gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Add bootstrap
-gem 'bootstrap-sass', '3.3.7'
+gem 'bootstrap'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -42,6 +42,8 @@ gem 'bootstrap-will_paginate'
 gem 'carrierwave'
 gem 'faker'
 gem 'will_paginate'
+# gem "font-awesome-rails"
+# gem 'material_icons'
 
 gem 'mini_magick'
 # Use ActiveStorage variant
@@ -51,7 +53,7 @@ gem 'mini_magick'
 # gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap'
 
 gem 'devise'
 gem 'omniauth-facebook'

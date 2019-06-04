@@ -7,22 +7,50 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
   </head>
 
-  <body>
-    <nav>
-      <%= link_to 'Social network', root_path %>
-      <% if user_signed_in? %>
-        <%= link_to current_user.name, user_path(current_user) %>
-        <%= link_to 'Find friends', users_path %>
-        <%= link_to "Notifications (#{requests_count})", requests_path %>
-        <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-      <% end %>
-    </nav>
+  <body class='gray-background'>
+    <div class="nav-container">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg px-0">
+          <div class="navbar-brand">
+            <%= link_to 'Social Network', root_path %>
+          </div>        
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+          <% if user_signed_in? %>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="material-icons">menu</i>
+            </button>
+          <% end %>
+          
+          <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <div class="navbar-nav">
+              <% if user_signed_in? %>
+              <%= link_to current_user.name, user_path(current_user) %>
+              <%= link_to 'Find friends', users_path %>
+              <%= link_to 'New Post', new_post_path %>
+              <%= link_to "Notifications (#{requests_count})", requests_path %>
+              <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+              <% end %>
+            </div>
+          </div>
+        </nav>
+      </div><!-- div container ends -->
+    </div>  
     
-    <%= yield %>
+    <div class="container">
+      <div class="row my-5">
+        <div class="col-12 col-md-10 col-lg-6 mx-auto">
+
+          <% flash.each do |key, value| %>
+            <%= content_tag :div, value, class: "flash #{key}" %>
+          <% end %>
+          
+          <%= yield %>
+        </div>
+      </div>  
+    </div>
   </body>
 </html>

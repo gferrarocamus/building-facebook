@@ -11,9 +11,9 @@ class RequestsController < ApplicationController
   def create
     @request = current_user.send_request(params[:receiver_id])
     if @request.save
-      flash[:notice] = 'Request sent successfully'
+      flash[:success] = 'Request sent successfully'
     else
-      flash[:alert] = 'Could not sent request'
+      flash[:alert] = 'Could not send request'
     end
     redirect_back(fallback_location: root_path)
   end
@@ -22,9 +22,9 @@ class RequestsController < ApplicationController
     return unless (request = Request.find_by(id: params[:id]))
 
     flash[:notice] = if request.destroy
-                       'Request cancelled'
+                       'Request removed'
                      else
-                       'Could not cancel that request'
+                       'Could not remove that request'
                      end
     redirect_back(fallback_location: users_path)
   end

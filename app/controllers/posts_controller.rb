@@ -20,7 +20,7 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(posts_params)
     if @post.save
-      flash[:notice] = 'Post created successfully.'
+      flash[:success] = 'Post created successfully.'
       redirect_to @post
     else
       flash[:notice] = 'Content should not be empty.'
