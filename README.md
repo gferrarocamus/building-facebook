@@ -26,8 +26,6 @@ Finally, fire up a local server:
 $ rails server
 ```
 
-You can see it live [here](https://social-network-for-microverse.herokuapp.com/).
-
 ## Maintainers
 
 [@gferrarocamus](https://github.com/gferrarocamus) [@jeton-th](https://github.com/jeton-th)
